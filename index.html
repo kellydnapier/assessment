@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessments</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --burg:#5c1a2a; --burg-light:#7a2e42; --burg-dark:#3e0f1b;
+  --accent:#c9a56c; --accent-light:#f5edd8; --accent-mid:#dfc89a;
+  --rose-tint:#fdf5f6; --rose-border:#f0d4d9;
+  --gray-50:#faf9f8; --gray-100:#f3f1ef; --gray-200:#e4e0dc;
+  --gray-400:#9e9690; --gray-600:#6b6360; --gray-800:#2e2826; --white:#fff;
+  --green:#2d8659; --amber:#c07c1a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--gray-100);color:var(--gray-800);min-height:100vh;}
+header{background:linear-gradient(135deg,var(--burg-dark) 0%,var(--burg) 60%,var(--burg-light) 100%);padding:0 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(62,15,27,.35);min-height:56px;}
+header h1{font-family:'DM Serif Display',serif;font-size:20px;color:var(--accent);font-weight:400;letter-spacing:.01em;white-space:nowrap;padding:14px 0;}
+.hdr-div{width:1px;height:22px;background:rgba(201,165,108,.25);flex-shrink:0;}
+.tab-nav{display:flex;gap:3px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1;min-width:0;padding:10px 0;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:7px 16px;border:1px solid transparent;border-radius:6px;background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.tab-btn:hover{color:var(--accent-light);background:rgba(201,165,108,.1);}
+.tab-btn.active{background:rgba(201,165,108,.18);color:var(--accent);border-color:rgba(201,165,108,.35);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+main{max-width:880px;margin:0 auto;padding:24px 16px 60px;}
+.section{background:#fff;border-radius:10px;padding:20px 22px;margin-bottom:10px;border:1px solid var(--gray-200);box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.section.conditional{display:none;border-left:3px solid var(--accent);}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--burg);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;gap:8px;}
+.section-title .tt{flex:1;}
+.sbadge{font-size:10px;font-weight:600;color:var(--burg-light);background:var(--rose-tint);border:1px solid var(--rose-border);padding:2px 8px;border-radius:10px;text-transform:none;letter-spacing:0;}
+.fr{display:grid;gap:12px;margin-bottom:12px;}
+.fr:last-child{margin-bottom:0;}
+.c2{grid-template-columns:1fr 1fr;}
+.c3{grid-template-columns:1fr 1fr 1fr;}
+.c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.c1{grid-template-columns:1fr;}
+.fl{display:block;font-size:11px;font-weight:600;color:var(--gray-600);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+input[type=text],input[type=number],select,textarea{width:100%;padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--gray-800);background:#fff;transition:border-color .18s,box-shadow .18s;appearance:none;-webkit-appearance:none;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239e9690' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,165,108,.15);}
+.tw{display:flex;gap:5px;}
+.tb{flex:1;padding:7px 10px;border:1px solid var(--gray-200);border-radius:8px;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--gray-600);cursor:pointer;text-align:center;transition:all .15s;}
+.tb:hover{border-color:var(--accent-mid);color:var(--burg);}
+.tb.active{background:var(--burg);border-color:var(--burg);color:#fff;}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:7px;}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:7px;}
+.ci{display:flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;}
+.ci:hover{border-color:var(--rose-border);background:var(--rose-tint);}
+.ci.checked{border-color:var(--burg-light);background:var(--rose-tint);}
+.ci input[type=checkbox]{width:15px;height:15px;accent-color:var(--burg);cursor:pointer;flex-shrink:0;margin:0;}
+.ci span{font-size:13px;font-weight:500;color:var(--gray-800);line-height:1.3;}
+.sf{display:none;margin-top:10px;padding:14px;background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);}
+.mt10{margin-top:10px;}
+.my-wrap{display:flex;gap:8px;}
+.my-wrap select{flex:2;}
+.my-wrap input{flex:1;}
+.gen-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--burg) 0%,var(--burg-light) 100%);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:all .18s;margin-bottom:10px;box-shadow:0 4px 14px rgba(92,26,42,.3);}
+.gen-btn:hover{background:linear-gradient(135deg,var(--burg-light) 0%,var(--burg) 100%);box-shadow:0 4px 18px rgba(92,26,42,.4);}
+.gen-btn:active{transform:scale(.997);}
+.out-sec{display:none;background:#fff;border-radius:10px;padding:20px 22px;border:1px solid var(--gray-200);box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:10px;}
+.out-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--gray-100);}
+.out-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--burg);}
+.copy-btn{padding:6px 14px;background:var(--accent);color:var(--burg-dark);border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:background .15s;}
+.copy-btn:hover{background:var(--accent-mid);}
+.copy-btn.copied{background:var(--green);color:#fff;}
+.out-txt{font-size:14px;line-height:1.85;color:var(--gray-800);background:var(--gray-50);padding:16px 18px;border-radius:8px;border:1px solid var(--gray-200);white-space:pre-wrap;}
+@media(max-width:768px){
+  .c2,.c3,.c4{grid-template-columns:1fr;}
+  header{padding:0 12px;gap:10px;}
+  header h1{font-size:17px;}
+  main{padding:14px 10px 60px;}
+  .section{padding:14px 16px;}
+  .cg{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));}
+  .mg{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));}
+}
+@media(max-width:480px){
+  header h1{font-size:15px;}
+  .tab-btn{font-size:11px;padding:6px 12px;}
+  .section{padding:12px 14px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Assessments</h1>
+  <div class="hdr-div"></div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="cardiac"   onclick="switchTab('cardiac')">Cardiac</button>
+    <button class="tab-btn"        data-tab="pulmonary" onclick="switchTab('pulmonary')">Pulmonary</button>
+    <button class="tab-btn"        data-tab="endocrine" onclick="switchTab('endocrine')">Endocrine</button>
+    <button class="tab-btn"        data-tab="renal"     onclick="switchTab('renal')">Renal</button>
+    <button class="tab-btn"        data-tab="neuro"     onclick="switchTab('neuro')">Neurological</button>
+    <button class="tab-btn"        data-tab="gi"        onclick="switchTab('gi')">GI</button>
+    <button class="tab-btn"        data-tab="msk"       onclick="switchTab('msk')">MSK</button>
+    <button class="tab-btn"        data-tab="heme"      onclick="switchTab('heme')">Hematologic</button>
+    <button class="tab-btn"        data-tab="integ"     onclick="switchTab('integ')">Integumentary</button>
+    <button class="tab-btn"        data-tab="bh"        onclick="switchTab('bh')">Behavioral</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════════════ CARDIAC ═══════════════ -->
+<div id="tab-cardiac" class="tab-panel active">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('c-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('c-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="c-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Cardiac Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-c-htn"><input type="checkbox" id="c-htn" value="Hypertension (HTN)" onchange="uc(this,'lbl-c-htn');cDx()"><span>Hypertension (HTN)</span></label>
+      <label class="ci" id="lbl-c-hld"><input type="checkbox" id="c-hld" value="Hyperlipidemia" onchange="uc(this,'lbl-c-hld')"><span>Hyperlipidemia</span></label>
+      <label class="ci" id="lbl-c-chf"><input type="checkbox" id="c-chf" value="Congestive Heart Failure (CHF)" onchange="uc(this,'lbl-c-chf');cDx()"><span>Congestive Heart Failure (CHF)</span></label>
+      <label class="ci" id="lbl-c-cad"><input type="checkbox" id="c-cad" value="Coronary Artery Disease (CAD)" onchange="uc(this,'lbl-c-cad')"><span>Coronary Artery Disease (CAD)</span></label>
+      <label class="ci" id="lbl-c-afib"><input type="checkbox" id="c-afib" value="Atrial Fibrillation (AFib)" onchange="uc(this,'lbl-c-afib');cDx()"><span>Atrial Fibrillation (AFib)</span></label>
+      <label class="ci" id="lbl-c-pad"><input type="checkbox" id="c-pad" value="Peripheral Artery Disease (PAD)" onchange="uc(this,'lbl-c-pad');cDx()"><span>Peripheral Artery Disease (PAD)</span></label>
+      <label class="ci" id="lbl-c-cm"><input type="checkbox" id="c-cm" value="Cardiomyopathy" onchange="uc(this,'lbl-c-cm');cDx()"><span>Cardiomyopathy</span></label>
+      <label class="ci" id="lbl-c-vhd"><input type="checkbox" id="c-vhd" value="Valvular Heart Disease" onchange="uc(this,'lbl-c-vhd');cDx()"><span>Valvular Heart Disease</span></label>
+      <label class="ci" id="lbl-c-ppm"><input type="checkbox" id="c-ppm" value="Pacemaker / ICD" onchange="uc(this,'lbl-c-ppm');cDx()"><span>Pacemaker / ICD</span></label>
+      <label class="ci" id="lbl-c-mi"><input type="checkbox" id="c-mi" value="History of MI" onchange="uc(this,'lbl-c-mi');cDx()"><span>History of MI</span></label>
+      <label class="ci" id="lbl-c-stroke"><input type="checkbox" id="c-stroke" value="History of Stroke / TIA" onchange="uc(this,'lbl-c-stroke');cDx()"><span>History of Stroke / TIA</span></label>
+      <label class="ci" id="lbl-c-dvt"><input type="checkbox" id="c-dvt" value="DVT / PE" onchange="uc(this,'lbl-c-dvt');cDx()"><span>DVT / PE</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('c','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('c','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="c-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="c-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="c-provname" placeholder="e.g. Taylor Bourelle PA"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="c-practice" placeholder="e.g. Central Cardiology"></div>
+      </div>
+    </div>
+    <div id="c-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Cardiologist Referral Status</label>
+          <select id="c-referral">
+            <option value="none">Not discussed</option>
+            <option value="accepted">Offered — Accepted</option>
+            <option value="declined">Offered — Declined</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Cardiac hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('c-hosp','no',this);showEl('c-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('c-hosp','yes',this);showEl('c-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="c-hosp" value="no">
+    <div class="sf" id="c-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="c-hosp-n" min="1" placeholder="e.g. 2"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="c-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="c-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="c-hosp-reason" placeholder="e.g. CHF exacerbation"></div></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="c-bp-sec">
+    <div class="section-title"><span class="tt">Blood Pressure Monitoring</span><span class="sbadge">HTN</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Monitoring Frequency</label>
+        <select id="c-bp-freq"><option value="daily">Daily</option><option value="periodically but not consistently" selected>Periodically but not consistently</option><option value="rarely">Rarely</option><option value="not at all">Not at all</option></select>
+      </div>
+      <div><label class="fl">Keeps a BP Log</label>
+        <div class="tw"><button class="tb" onclick="setToggle('c-bplog','yes',this)">Yes</button><button class="tb active" onclick="setToggle('c-bplog','no',this)">No</button></div>
+        <input type="hidden" id="c-bplog" value="no">
+      </div>
+    </div>
+    <div class="fr c2">
+      <div><label class="fl">BP Range — Low</label><input type="text" id="c-bp-lo" placeholder="e.g. 130/70"></div>
+      <div><label class="fl">BP Range — High</label><input type="text" id="c-bp-hi" placeholder="e.g. 160/90"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Cardiac Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-cm-nif"><input type="checkbox" id="cm-nif" value="nifedipine" onchange="uc(this,'lbl-cm-nif')"><span>Nifedipine</span></label>
+      <label class="ci" id="lbl-cm-fur"><input type="checkbox" id="cm-fur" value="furosemide" onchange="uc(this,'lbl-cm-fur')"><span>Furosemide</span></label>
+      <label class="ci" id="lbl-cm-iso"><input type="checkbox" id="cm-iso" value="isosorbide mononitrate" onchange="uc(this,'lbl-cm-iso')"><span>Isosorbide Mononitrate</span></label>
+      <label class="ci" id="lbl-cm-hyd"><input type="checkbox" id="cm-hyd" value="hydralazine" onchange="uc(this,'lbl-cm-hyd')"><span>Hydralazine</span></label>
+      <label class="ci" id="lbl-cm-min"><input type="checkbox" id="cm-min" value="minoxidil" onchange="uc(this,'lbl-cm-min')"><span>Minoxidil</span></label>
+      <label class="ci" id="lbl-cm-car"><input type="checkbox" id="cm-car" value="carvedilol" onchange="uc(this,'lbl-cm-car')"><span>Carvedilol</span></label>
+      <label class="ci" id="lbl-cm-met"><input type="checkbox" id="cm-met" value="metoprolol" onchange="uc(this,'lbl-cm-met')"><span>Metoprolol</span></label>
+      <label class="ci" id="lbl-cm-lis"><input type="checkbox" id="cm-lis" value="lisinopril" onchange="uc(this,'lbl-cm-lis')"><span>Lisinopril</span></label>
+      <label class="ci" id="lbl-cm-aml"><input type="checkbox" id="cm-aml" value="amlodipine" onchange="uc(this,'lbl-cm-aml')"><span>Amlodipine</span></label>
+      <label class="ci" id="lbl-cm-ato"><input type="checkbox" id="cm-ato" value="atorvastatin" onchange="uc(this,'lbl-cm-ato')"><span>Atorvastatin</span></label>
+      <label class="ci" id="lbl-cm-ros"><input type="checkbox" id="cm-ros" value="rosuvastatin" onchange="uc(this,'lbl-cm-ros')"><span>Rosuvastatin</span></label>
+      <label class="ci" id="lbl-cm-asp"><input type="checkbox" id="cm-asp" value="aspirin" onchange="uc(this,'lbl-cm-asp')"><span>Aspirin</span></label>
+      <label class="ci" id="lbl-cm-spi"><input type="checkbox" id="cm-spi" value="spironolactone" onchange="uc(this,'lbl-cm-spi')"><span>Spironolactone</span></label>
+      <label class="ci" id="lbl-cm-dig"><input type="checkbox" id="cm-dig" value="digoxin" onchange="uc(this,'lbl-cm-dig')"><span>Digoxin</span></label>
+      <label class="ci" id="lbl-cm-ami"><input type="checkbox" id="cm-ami" value="amiodarone" onchange="uc(this,'lbl-cm-ami')"><span>Amiodarone</span></label>
+      <label class="ci" id="lbl-cm-war"><input type="checkbox" id="cm-war" value="warfarin" onchange="uc(this,'lbl-cm-war');handleWarfarin()"><span>Warfarin</span></label>
+      <label class="ci" id="lbl-cm-eli"><input type="checkbox" id="cm-eli" value="apixaban (Eliquis)" onchange="uc(this,'lbl-cm-eli')"><span>Eliquis (Apixaban)</span></label>
+      <label class="ci" id="lbl-cm-xar"><input type="checkbox" id="cm-xar" value="rivaroxaban (Xarelto)" onchange="uc(this,'lbl-cm-xar')"><span>Xarelto (Rivaroxaban)</span></label>
+      <label class="ci" id="lbl-cm-pra"><input type="checkbox" id="cm-pra" value="dabigatran (Pradaxa)" onchange="uc(this,'lbl-cm-pra')"><span>Pradaxa (Dabigatran)</span></label>
+      <label class="ci" id="lbl-cm-clo"><input type="checkbox" id="cm-clo" value="clopidogrel (Plavix)" onchange="uc(this,'lbl-cm-clo')"><span>Plavix (Clopidogrel)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="cm-other" placeholder="Comma-separated"></div>
+    <div class="sf" id="c-war-sub">
+      <div class="fr c2">
+        <div><label class="fl">Last INR Value</label><input type="text" id="c-inr" placeholder="e.g. 2.4"></div>
+        <div><label class="fl">INR in Therapeutic Range</label>
+          <div class="tw"><button class="tb active" onclick="setToggle('c-inr-range','yes',this)">Yes</button><button class="tb" onclick="setToggle('c-inr-range','no',this)">No</button></div>
+          <input type="hidden" id="c-inr-range" value="yes">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms &amp; Adverse Effects</span></div>
+    <div class="fr c2">
+      <div>
+        <label class="fl">Member Denies Cardiac Symptoms</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('c-sx','yes',this);showEl('c-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('c-sx','no',this);showEl('c-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="c-sx" value="yes">
+        <div class="sf" id="c-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="c-sx-det"></div>
+      </div>
+      <div>
+        <label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('c-adv','yes',this);showEl('c-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('c-adv','no',this);showEl('c-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="c-adv" value="yes">
+        <div class="sf" id="c-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="c-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">BMI &amp; Lifestyle</span></div>
+    <div class="fr c2">
+      <div><label class="fl">BMI</label><input type="number" id="c-bmi" placeholder="e.g. 38.7" step="0.1"></div>
+      <div><label class="fl">Exercises Regularly</label>
+        <div class="tw"><button class="tb" onclick="setToggle('c-ex','yes',this)">Yes</button><button class="tb active" onclick="setToggle('c-ex','no',this)">No</button></div>
+        <input type="hidden" id="c-ex" value="no">
+      </div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="c-afib-sec">
+    <div class="section-title"><span class="tt">Atrial Fibrillation Details</span><span class="sbadge">AFib</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Rate / Rhythm Status</label>
+        <select id="c-afib-ctrl"><option value="rate controlled">Rate controlled</option><option value="rhythm controlled">Rhythm controlled</option><option value="uncontrolled">Uncontrolled</option><option value="unknown">Unknown</option></select>
+      </div>
+      <div><label class="fl">On Anticoagulation</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('c-afib-ac','yes',this);showEl('c-afib-ac-sub',true)">Yes</button><button class="tb" onclick="setToggle('c-afib-ac','no',this);showEl('c-afib-ac-sub',false)">No</button></div>
+        <input type="hidden" id="c-afib-ac" value="yes">
+      </div>
+    </div>
+    <div class="sf" id="c-afib-ac-sub" style="display:block">
+      <label class="fl">Anticoagulant</label>
+      <select id="c-anticoag" style="max-width:260px"><option value="apixaban (Eliquis)">Eliquis (Apixaban)</option><option value="rivaroxaban (Xarelto)">Xarelto (Rivaroxaban)</option><option value="dabigatran (Pradaxa)">Pradaxa (Dabigatran)</option><option value="warfarin">Warfarin</option></select>
+    </div>
+  </div>
+
+  <div class="section conditional" id="c-pad-sec">
+    <div class="section-title"><span class="tt">PAD Details</span><span class="sbadge">PAD</span></div>
+    <div class="fr c3">
+      <div><label class="fl">Claudication Symptoms</label><div class="tw"><button class="tb" onclick="setToggle('c-claud','yes',this)">Yes</button><button class="tb active" onclick="setToggle('c-claud','no',this)">No</button></div><input type="hidden" id="c-claud" value="no"></div>
+      <div><label class="fl">Non-Healing Wounds</label><div class="tw"><button class="tb" onclick="setToggle('c-wounds','yes',this)">Yes</button><button class="tb active" onclick="setToggle('c-wounds','no',this)">No</button></div><input type="hidden" id="c-wounds" value="no"></div>
+      <div><label class="fl">Current Smoker</label><div class="tw"><button class="tb" onclick="setToggle('c-smoke','yes',this)">Yes</button><button class="tb active" onclick="setToggle('c-smoke','no',this)">No</button></div><input type="hidden" id="c-smoke" value="no"></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="c-cm-sec">
+    <div class="section-title"><span class="tt">Cardiomyopathy Details</span><span class="sbadge">Cardiomyopathy</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Type</label><select id="c-cmtype"><option value="dilated">Dilated</option><option value="hypertrophic">Hypertrophic</option><option value="ischemic">Ischemic</option><option value="unspecified">Unspecified</option></select></div>
+      <div><label class="fl">Ejection Fraction Known</label><div class="tw"><button class="tb" onclick="setToggle('c-ef','yes',this);showEl('c-ef-sub',true)">Yes</button><button class="tb active" onclick="setToggle('c-ef','no',this);showEl('c-ef-sub',false)">No</button></div><input type="hidden" id="c-ef" value="no"></div>
+    </div>
+    <div class="sf" id="c-ef-sub"><label class="fl">Ejection Fraction (%)</label><input type="number" id="c-ef-pct" min="1" max="80" placeholder="e.g. 35" style="max-width:120px"></div>
+  </div>
+
+  <div class="section conditional" id="c-vhd-sec">
+    <div class="section-title"><span class="tt">Valvular Heart Disease Details</span><span class="sbadge">Valvular</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Valve(s) Affected</label><select id="c-valve"><option value="mitral">Mitral</option><option value="aortic">Aortic</option><option value="tricuspid">Tricuspid</option><option value="pulmonic">Pulmonic</option><option value="mitral and aortic">Mitral and Aortic</option><option value="multiple">Multiple</option></select></div>
+      <div><label class="fl">Type</label><select id="c-vtype"><option value="stenosis">Stenosis</option><option value="regurgitation">Regurgitation</option><option value="stenosis and regurgitation">Both (Stenosis &amp; Regurgitation)</option></select></div>
+    </div>
+    <div class="fr c1 mt10"><div><label class="fl">History of Valve Replacement</label><div class="tw" style="max-width:200px"><button class="tb" onclick="setToggle('c-vrep','yes',this);showEl('c-vrep-sub',true)">Yes</button><button class="tb active" onclick="setToggle('c-vrep','no',this);showEl('c-vrep-sub',false)">No</button></div><input type="hidden" id="c-vrep" value="no"></div></div>
+    <div class="sf" id="c-vrep-sub"><label class="fl">Replacement Type</label><select id="c-vreptype" style="max-width:260px"><option value="mechanical">Mechanical</option><option value="biological/bioprosthetic">Biological / Bioprosthetic</option></select></div>
+  </div>
+
+  <div class="section conditional" id="c-ppm-sec">
+    <div class="section-title"><span class="tt">Pacemaker / ICD Details</span><span class="sbadge">PPM/ICD</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Device Type</label><select id="c-devtype"><option value="pacemaker">Pacemaker</option><option value="ICD">ICD</option><option value="CRT-D">CRT-D</option><option value="CRT-P">CRT-P</option></select></div>
+      <div><label class="fl">Device Check Current</label><div class="tw"><button class="tb active" onclick="setToggle('c-devchk','yes',this)">Yes</button><button class="tb" onclick="setToggle('c-devchk','no',this)">No</button></div><input type="hidden" id="c-devchk" value="yes"></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="c-mi-sec">
+    <div class="section-title"><span class="tt">History of MI Details</span><span class="sbadge">MI</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Timeframe</label><input type="text" id="c-mi-time" placeholder="e.g. 2022 or approximately 3 years ago"></div>
+      <div><label class="fl">Current on Post-MI Medications</label><div class="tw"><button class="tb active" onclick="setToggle('c-postmi','yes',this)">Yes</button><button class="tb" onclick="setToggle('c-postmi','no',this)">No</button></div><input type="hidden" id="c-postmi" value="yes"></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="c-stroke-sec">
+    <div class="section-title"><span class="tt">Stroke / TIA Details</span><span class="sbadge">Stroke/TIA</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Type</label><select id="c-stroktype"><option value="ischemic stroke">Ischemic Stroke</option><option value="TIA">TIA</option><option value="hemorrhagic stroke">Hemorrhagic Stroke</option></select></div>
+      <div><label class="fl">Residual Deficits</label><div class="tw"><button class="tb" onclick="setToggle('c-deficits','yes',this);showEl('c-def-sub',true)">Yes</button><button class="tb active" onclick="setToggle('c-deficits','no',this);showEl('c-def-sub',false)">No</button></div><input type="hidden" id="c-deficits" value="no"></div>
+    </div>
+    <div class="sf" id="c-def-sub"><label class="fl">Describe Deficits</label><input type="text" id="c-def-det" placeholder="e.g. mild left-sided weakness"></div>
+  </div>
+
+  <div class="section conditional" id="c-dvt-sec">
+    <div class="section-title"><span class="tt">DVT / PE Details</span><span class="sbadge">DVT/PE</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Status</label><select id="c-dvtst"><option value="active">Active</option><option value="history of">History of</option></select></div>
+      <div><label class="fl">On Anticoagulation</label><div class="tw"><button class="tb active" onclick="setToggle('c-dvtac','yes',this)">Yes</button><button class="tb" onclick="setToggle('c-dvtac','no',this)">No</button></div><input type="hidden" id="c-dvtac" value="yes"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Educational Materials</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-c-dash"><input type="checkbox" id="c-dash" onchange="uc(this,'lbl-c-dash')"><span>DASH Diet</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Community Resources</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-c-hhclass"><input type="checkbox" id="c-hhclass" onchange="uc(this,'lbl-c-hhclass')"><span>Heart Healthy Lifestyle Class (Dignity Health)</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateCardiac()">Generate Assessment</button>
+  <div class="out-sec" id="c-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="c-copy-btn" onclick="copyNote('c-out-txt','c-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="c-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ PULMONARY ═══════════════ -->
+<div id="tab-pulmonary" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('p-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('p-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="p-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Pulmonary Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-p-copd"><input type="checkbox" id="p-copd" value="COPD" onchange="uc(this,'lbl-p-copd');pDx()"><span>COPD</span></label>
+      <label class="ci" id="lbl-p-asthma"><input type="checkbox" id="p-asthma" value="Asthma" onchange="uc(this,'lbl-p-asthma');pDx()"><span>Asthma</span></label>
+      <label class="ci" id="lbl-p-osa"><input type="checkbox" id="p-osa" value="Obstructive Sleep Apnea (OSA)" onchange="uc(this,'lbl-p-osa');pDx()"><span>Obstructive Sleep Apnea (OSA)</span></label>
+      <label class="ci" id="lbl-p-vf"><input type="checkbox" id="p-vf" value="Valley Fever (Coccidioidomycosis)" onchange="uc(this,'lbl-p-vf')"><span>Valley Fever</span></label>
+      <label class="ci" id="lbl-p-phtn"><input type="checkbox" id="p-phtn" value="Pulmonary Hypertension" onchange="uc(this,'lbl-p-phtn')"><span>Pulmonary Hypertension</span></label>
+      <label class="ci" id="lbl-p-pf"><input type="checkbox" id="p-pf" value="Pulmonary Fibrosis" onchange="uc(this,'lbl-p-pf')"><span>Pulmonary Fibrosis</span></label>
+      <label class="ci" id="lbl-p-bronch"><input type="checkbox" id="p-bronch" value="Bronchiectasis" onchange="uc(this,'lbl-p-bronch')"><span>Bronchiectasis</span></label>
+      <label class="ci" id="lbl-p-ild"><input type="checkbox" id="p-ild" value="Interstitial Lung Disease (ILD)" onchange="uc(this,'lbl-p-ild')"><span>Interstitial Lung Disease (ILD)</span></label>
+      <label class="ci" id="lbl-p-pna"><input type="checkbox" id="p-pna" value="History of Pneumonia" onchange="uc(this,'lbl-p-pna')"><span>History of Pneumonia</span></label>
+      <label class="ci" id="lbl-p-pe"><input type="checkbox" id="p-pe" value="Pleural Effusion" onchange="uc(this,'lbl-p-pe')"><span>Pleural Effusion</span></label>
+      <label class="ci" id="lbl-p-tb"><input type="checkbox" id="p-tb" value="History of Tuberculosis (TB)" onchange="uc(this,'lbl-p-tb')"><span>History of Tuberculosis (TB)</span></label>
+    </div>
+    <div class="sf mt10" id="p-osa-sub">
+      <label class="fl">Daytime Somnolence r/t OSA</label>
+      <div class="tw" style="max-width:200px"><button class="tb" onclick="setToggle('p-somnolence','yes',this)">Yes</button><button class="tb active" onclick="setToggle('p-somnolence','no',this)">No</button></div>
+      <input type="hidden" id="p-somnolence" value="no">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('p','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('p','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="p-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="p-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="p-provname" placeholder="e.g. Rajan Goyal MD"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="p-practice" placeholder="e.g. Atlas Medical Consultants"></div>
+      </div>
+    </div>
+    <div id="p-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Pulmonologist Referral Status</label>
+          <select id="p-referral"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Pulmonary hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('p-hosp','no',this);showEl('p-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('p-hosp','yes',this);showEl('p-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="p-hosp" value="no">
+    <div class="sf" id="p-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="p-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="p-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="p-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="p-hosp-reason" placeholder="e.g. COPD exacerbation, pneumonia"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Oxygen Saturation Monitoring</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Checks O2 at Home</label>
+        <div class="tw" style="max-width:200px"><button class="tb active" onclick="setToggle('p-o2chk','yes',this);showEl('p-o2-sub',true)">Yes</button><button class="tb" onclick="setToggle('p-o2chk','no',this);showEl('p-o2-sub',false)">No</button></div>
+        <input type="hidden" id="p-o2chk" value="yes">
+      </div>
+    </div>
+    <div class="sf" id="p-o2-sub" style="display:block">
+      <div class="fr c3">
+        <div><label class="fl">Frequency</label><select id="p-o2freq"><option value="daily">Daily</option><option value="occasionally but not every day" selected>Occasionally</option><option value="not consistently">Not Consistently</option></select></div>
+        <div><label class="fl">O2 Range — Low (%)</label><input type="text" id="p-o2-lo" placeholder="e.g. 94"></div>
+        <div><label class="fl">O2 Range — High (%)</label><input type="text" id="p-o2-hi" placeholder="e.g. 97"></div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Keeps a Log</label>
+        <div class="tw" style="max-width:200px"><button class="tb" onclick="setToggle('p-o2log','yes',this)">Yes</button><button class="tb active" onclick="setToggle('p-o2log','no',this)">No</button></div>
+        <input type="hidden" id="p-o2log" value="no">
+      </div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Respiratory Status</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Shortness of Breath</label>
+        <select id="p-sob"><option value="none">Denies SOB</option><option value="exertion">SOB with exertion only</option><option value="rest">SOB at rest</option></select>
+      </div>
+      <div><label class="fl">Requires Supplemental O2</label>
+        <div class="tw"><button class="tb" onclick="setToggle('p-supO2','yes',this)">Yes</button><button class="tb active" onclick="setToggle('p-supO2','no',this)">No</button></div>
+        <input type="hidden" id="p-supO2" value="no">
+      </div>
+    </div>
+    <div class="fr c2 mt10">
+      <div><label class="fl">Compliant with Inhaler</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('p-inhaler','yes',this)">Yes</button><button class="tb" onclick="setToggle('p-inhaler','no',this)">No</button></div>
+        <input type="hidden" id="p-inhaler" value="yes">
+      </div>
+      <div><label class="fl">Uses Nebulizer</label>
+        <div class="tw"><button class="tb" onclick="setToggle('p-neb','yes',this)">Yes</button><button class="tb active" onclick="setToggle('p-neb','no',this)">No</button></div>
+        <input type="hidden" id="p-neb" value="no">
+      </div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="p-cpap-sec">
+    <div class="section-title"><span class="tt">CPAP Details</span><span class="sbadge">OSA</span></div>
+    <div class="fr c2">
+      <div><label class="fl">CPAP Compliance</label>
+        <select id="p-cpap"><option value="compliant">Compliant</option><option value="non-compliant">Non-Compliant</option><option value="no cpap">Does Not Have CPAP</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Smoking Status</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Current Smoker</label>
+        <div class="tw" style="max-width:200px"><button class="tb" onclick="setToggle('p-smoke','yes',this);showEl('p-smoke-sub',true)">Yes</button><button class="tb active" onclick="setToggle('p-smoke','no',this);showEl('p-smoke-sub',false)">No</button></div>
+        <input type="hidden" id="p-smoke" value="no">
+      </div>
+    </div>
+    <div class="sf" id="p-smoke-sub">
+      <div class="fr c2">
+        <div><label class="fl">Amount (per day)</label><input type="text" id="p-smoke-amt" placeholder="e.g. 3-5 cigarettes a day"></div>
+        <div><label class="fl">Cessation — Member's Response</label>
+          <select id="p-cessation"><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option><option value="not discussed">Not Discussed</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Pulmonary Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('p-sx','yes',this);showEl('p-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('p-sx','no',this);showEl('p-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="p-sx" value="yes">
+        <div class="sf" id="p-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="p-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Pulmonary Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-pm-alb"><input type="checkbox" id="pm-alb" value="albuterol" onchange="uc(this,'lbl-pm-alb')"><span>Albuterol (inhaler)</span></label>
+      <label class="ci" id="lbl-pm-spi"><input type="checkbox" id="pm-spi" value="tiotropium (Spiriva)" onchange="uc(this,'lbl-pm-spi')"><span>Spiriva (Tiotropium)</span></label>
+      <label class="ci" id="lbl-pm-adv"><input type="checkbox" id="pm-adv" value="fluticasone/salmeterol (Advair)" onchange="uc(this,'lbl-pm-adv')"><span>Advair (Fluticasone/Salmeterol)</span></label>
+      <label class="ci" id="lbl-pm-sym"><input type="checkbox" id="pm-sym" value="budesonide/formoterol (Symbicort)" onchange="uc(this,'lbl-pm-sym')"><span>Symbicort (Budesonide/Formoterol)</span></label>
+      <label class="ci" id="lbl-pm-atr"><input type="checkbox" id="pm-atr" value="ipratropium (Atrovent)" onchange="uc(this,'lbl-pm-atr')"><span>Atrovent (Ipratropium)</span></label>
+      <label class="ci" id="lbl-pm-mon"><input type="checkbox" id="pm-mon" value="montelukast (Singulair)" onchange="uc(this,'lbl-pm-mon')"><span>Singulair (Montelukast)</span></label>
+      <label class="ci" id="lbl-pm-rof"><input type="checkbox" id="pm-rof" value="roflumilast (Daliresp)" onchange="uc(this,'lbl-pm-rof')"><span>Daliresp (Roflumilast)</span></label>
+      <label class="ci" id="lbl-pm-pred"><input type="checkbox" id="pm-pred" value="prednisone" onchange="uc(this,'lbl-pm-pred')"><span>Prednisone</span></label>
+      <label class="ci" id="lbl-pm-az"><input type="checkbox" id="pm-az" value="azithromycin" onchange="uc(this,'lbl-pm-az')"><span>Azithromycin</span></label>
+      <label class="ci" id="lbl-pm-theo"><input type="checkbox" id="pm-theo" value="theophylline" onchange="uc(this,'lbl-pm-theo')"><span>Theophylline</span></label>
+      <label class="ci" id="lbl-pm-mod"><input type="checkbox" id="pm-mod" value="modafinil" onchange="uc(this,'lbl-pm-mod')"><span>Modafinil</span></label>
+      <label class="ci" id="lbl-pm-lev"><input type="checkbox" id="pm-lev" value="levalbuterol (Xopenex)" onchange="uc(this,'lbl-pm-lev')"><span>Xopenex (Levalbuterol)</span></label>
+      <label class="ci" id="lbl-pm-dup"><input type="checkbox" id="pm-dup" value="dupilumab (Dupixent)" onchange="uc(this,'lbl-pm-dup')"><span>Dupixent (Dupilumab)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="pm-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('p-adv','yes',this);showEl('p-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('p-adv','no',this);showEl('p-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="p-adv" value="yes">
+        <div class="sf" id="p-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="p-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">BMI &amp; Lifestyle</span></div>
+    <div class="fr c2">
+      <div><label class="fl">BMI</label><input type="number" id="p-bmi" placeholder="e.g. 34.2" step="0.1"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Community Resources</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-p-bbc"><input type="checkbox" id="p-bbc" onchange="uc(this,'lbl-p-bbc')"><span>Better Breathers Club (American Lung Association)</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generatePulmonary()">Generate Assessment</button>
+  <div class="out-sec" id="p-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="p-copy-btn" onclick="copyNote('p-out-txt','p-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="p-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ ENDOCRINE ═══════════════ -->
+<div id="tab-endocrine" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('e-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('e-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="e-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Endocrine Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-e-dm2"><input type="checkbox" id="e-dm2" value="Type 2 Diabetes" onchange="uc(this,'lbl-e-dm2');eDx()"><span>Type 2 Diabetes</span></label>
+      <label class="ci" id="lbl-e-dm1"><input type="checkbox" id="e-dm1" value="Type 1 Diabetes" onchange="uc(this,'lbl-e-dm1');eDx()"><span>Type 1 Diabetes</span></label>
+      <label class="ci" id="lbl-e-hpth"><input type="checkbox" id="e-hpth" value="Hyperparathyroidism" onchange="uc(this,'lbl-e-hpth');eDx()"><span>Hyperparathyroidism</span></label>
+      <label class="ci" id="lbl-e-hypo"><input type="checkbox" id="e-hypo" value="Hypothyroidism" onchange="uc(this,'lbl-e-hypo')"><span>Hypothyroidism</span></label>
+      <label class="ci" id="lbl-e-hyper"><input type="checkbox" id="e-hyper" value="Hyperthyroidism / Graves Disease" onchange="uc(this,'lbl-e-hyper')"><span>Hyperthyroidism / Graves Disease</span></label>
+      <label class="ci" id="lbl-e-adrenal"><input type="checkbox" id="e-adrenal" value="Adrenal Insufficiency" onchange="uc(this,'lbl-e-adrenal')"><span>Adrenal Insufficiency</span></label>
+      <label class="ci" id="lbl-e-cushings"><input type="checkbox" id="e-cushings" value="Cushing's Syndrome" onchange="uc(this,'lbl-e-cushings')"><span>Cushing's Syndrome</span></label>
+      <label class="ci" id="lbl-e-osteo"><input type="checkbox" id="e-osteo" value="Osteoporosis / Osteopenia" onchange="uc(this,'lbl-e-osteo')"><span>Osteoporosis / Osteopenia</span></label>
+      <label class="ci" id="lbl-e-meta"><input type="checkbox" id="e-meta" value="Metabolic Syndrome" onchange="uc(this,'lbl-e-meta')"><span>Metabolic Syndrome</span></label>
+    </div>
+    <div class="sf mt10" id="e-hpth-sub">
+      <label class="fl">Hyperparathyroidism Type</label>
+      <select id="e-hpth-type" style="max-width:280px"><option value="secondary">Secondary</option><option value="primary">Primary</option></select>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('e','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('e','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="e-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="e-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="e-provname" placeholder="e.g. Jennifer Johnson NP"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="e-practice" placeholder="e.g. Kern Endocrine Center"></div>
+      </div>
+    </div>
+    <div id="e-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Endocrinologist Referral Status</label>
+          <select id="e-referral"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Endocrine hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('e-hosp','no',this);showEl('e-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('e-hosp','yes',this);showEl('e-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="e-hosp" value="no">
+    <div class="sf" id="e-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="e-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="e-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="e-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="e-hosp-reason" placeholder="e.g. DKA, hypoglycemic episode"></div></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="e-bs-sec">
+    <div class="section-title"><span class="tt">Blood Sugar Monitoring</span><span class="sbadge">Diabetes</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Has CGM</label>
+        <div class="tw"><button class="tb" onclick="setToggle('e-cgm','yes',this);showEl('e-cgm-sub',true);showEl('e-cgm-ref',false)">Yes</button><button class="tb active" onclick="setToggle('e-cgm','no',this);showEl('e-cgm-sub',false);showEl('e-cgm-ref',true)">No</button></div>
+        <input type="hidden" id="e-cgm" value="no">
+      </div>
+      <div><label class="fl">Checks BS at Home</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('e-bschk','yes',this);showEl('e-bs-log-wrap',true)">Yes</button><button class="tb" onclick="setToggle('e-bschk','no',this);showEl('e-bs-log-wrap',false)">No</button></div>
+        <input type="hidden" id="e-bschk" value="yes">
+      </div>
+    </div>
+    <div class="sf" id="e-cgm-sub">
+      <label class="fl">CGM Type</label><input type="text" id="e-cgm-type" placeholder="e.g. Dexcom, Libre" style="max-width:260px">
+    </div>
+    <div id="e-bs-log-wrap" class="mt10">
+      <div class="fr c3">
+        <div><label class="fl">Keeps a Log</label>
+          <div class="tw"><button class="tb" onclick="setToggle('e-bslog','yes',this)">Yes</button><button class="tb active" onclick="setToggle('e-bslog','no',this)">No</button></div>
+          <input type="hidden" id="e-bslog" value="no">
+        </div>
+        <div><label class="fl">BS Range — Low</label><input type="text" id="e-bs-lo" placeholder="e.g. 120"></div>
+        <div><label class="fl">BS Range — High</label><input type="text" id="e-bs-hi" placeholder="e.g. 250"></div>
+      </div>
+    </div>
+    <div id="e-cgm-ref" class="mt10">
+      <label class="fl">CGM Referral</label>
+      <select id="e-cgm-refst" style="max-width:280px"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+    </div>
+    <div class="fr c3 mt10">
+      <div><label class="fl">Most Recent A1c</label><input type="text" id="e-a1c" placeholder="e.g. 6.6"></div>
+      <div><label class="fl">A1c Date — Month</label><select id="e-a1c-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select></div>
+      <div><label class="fl">A1c Date — Year</label><input type="number" id="e-a1c-yr" min="2020" max="2030" placeholder="Year"></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="e-epi-sec">
+    <div class="section-title"><span class="tt">Hypoglycemia &amp; Hyperglycemia History</span><span class="sbadge">Diabetes</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Hypoglycemic Episodes</label>
+        <div class="tw"><button class="tb" onclick="setToggle('e-hypoepi','yes',this)">Yes</button><button class="tb active" onclick="setToggle('e-hypoepi','no',this)">No</button></div>
+        <input type="hidden" id="e-hypoepi" value="no">
+      </div>
+      <div><label class="fl">Hyperglycemic Episodes</label>
+        <div class="tw"><button class="tb" onclick="setToggle('e-hyperepi','yes',this)">Yes</button><button class="tb active" onclick="setToggle('e-hyperepi','no',this)">No</button></div>
+        <input type="hidden" id="e-hyperepi" value="no">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Endocrine Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('e-sx','yes',this);showEl('e-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('e-sx','no',this);showEl('e-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="e-sx" value="yes">
+        <div class="sf" id="e-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="e-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Endocrine Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-em-met"><input type="checkbox" id="em-met" value="metformin" onchange="uc(this,'lbl-em-met')"><span>Metformin</span></label>
+      <label class="ci" id="lbl-em-gli"><input type="checkbox" id="em-gli" value="glipizide" onchange="uc(this,'lbl-em-gli')"><span>Glipizide</span></label>
+      <label class="ci" id="lbl-em-glim"><input type="checkbox" id="em-glim" value="glimepiride" onchange="uc(this,'lbl-em-glim')"><span>Glimepiride</span></label>
+      <label class="ci" id="lbl-em-lan"><input type="checkbox" id="em-lan" value="insulin glargine (Lantus)" onchange="uc(this,'lbl-em-lan')"><span>Lantus (Insulin Glargine)</span></label>
+      <label class="ci" id="lbl-em-hum"><input type="checkbox" id="em-hum" value="insulin lispro (Humalog)" onchange="uc(this,'lbl-em-hum')"><span>Humalog (Insulin Lispro)</span></label>
+      <label class="ci" id="lbl-em-nov"><input type="checkbox" id="em-nov" value="insulin aspart (Novolog)" onchange="uc(this,'lbl-em-nov')"><span>Novolog (Insulin Aspart)</span></label>
+      <label class="ci" id="lbl-em-jan"><input type="checkbox" id="em-jan" value="sitagliptin (Januvia)" onchange="uc(this,'lbl-em-jan')"><span>Januvia (Sitagliptin)</span></label>
+      <label class="ci" id="lbl-em-jar"><input type="checkbox" id="em-jar" value="empagliflozin (Jardiance)" onchange="uc(this,'lbl-em-jar')"><span>Jardiance (Empagliflozin)</span></label>
+      <label class="ci" id="lbl-em-oze"><input type="checkbox" id="em-oze" value="semaglutide (Ozempic)" onchange="uc(this,'lbl-em-oze')"><span>Ozempic (Semaglutide)</span></label>
+      <label class="ci" id="lbl-em-tru"><input type="checkbox" id="em-tru" value="dulaglutide (Trulicity)" onchange="uc(this,'lbl-em-tru')"><span>Trulicity (Dulaglutide)</span></label>
+      <label class="ci" id="lbl-em-vic"><input type="checkbox" id="em-vic" value="liraglutide (Victoza)" onchange="uc(this,'lbl-em-vic')"><span>Victoza (Liraglutide)</span></label>
+      <label class="ci" id="lbl-em-far"><input type="checkbox" id="em-far" value="dapagliflozin (Farxiga)" onchange="uc(this,'lbl-em-far')"><span>Farxiga (Dapagliflozin)</span></label>
+      <label class="ci" id="lbl-em-lev"><input type="checkbox" id="em-lev" value="levothyroxine" onchange="uc(this,'lbl-em-lev')"><span>Levothyroxine</span></label>
+      <label class="ci" id="lbl-em-cin"><input type="checkbox" id="em-cin" value="cinacalcet" onchange="uc(this,'lbl-em-cin')"><span>Cinacalcet</span></label>
+      <label class="ci" id="lbl-em-ale"><input type="checkbox" id="em-ale" value="alendronate (Fosamax)" onchange="uc(this,'lbl-em-ale')"><span>Fosamax (Alendronate)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="em-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('e-adv','yes',this);showEl('e-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('e-adv','no',this);showEl('e-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="e-adv" value="yes">
+        <div class="sf" id="e-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="e-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">BMI &amp; Lifestyle</span></div>
+    <div class="fr c2">
+      <div><label class="fl">BMI</label><input type="number" id="e-bmi" placeholder="e.g. 32.1" step="0.1"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Additional Referrals</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-e-nutri"><input type="checkbox" id="e-nutri" onchange="uc(this,'lbl-e-nutri')"><span>Nutritionist (Complex Dietary Needs)</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Educational Materials</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-e-dfh"><input type="checkbox" id="e-dfh" onchange="uc(this,'lbl-e-dfh')"><span>Diabetes Food Hub</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Community Resources</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-e-ss"><input type="checkbox" id="e-ss" onchange="uc(this,'lbl-e-ss')"><span>Silver Sneakers</span></label>
+      <label class="ci" id="lbl-e-deep"><input type="checkbox" id="e-deep" onchange="uc(this,'lbl-e-deep')"><span>Diabetes Empowerment Education Program (DEEP)</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateEndocrine()">Generate Assessment</button>
+  <div class="out-sec" id="e-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="e-copy-btn" onclick="copyNote('e-out-txt','e-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="e-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ RENAL ═══════════════ -->
+<div id="tab-renal" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('r-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('r-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="r-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Renal / Urogenital Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-r-ckd"><input type="checkbox" id="r-ckd" value="Chronic Kidney Disease (CKD)" onchange="uc(this,'lbl-r-ckd');rDx()"><span>Chronic Kidney Disease (CKD)</span></label>
+      <label class="ci" id="lbl-r-esrd"><input type="checkbox" id="r-esrd" value="End Stage Renal Disease (ESRD)" onchange="uc(this,'lbl-r-esrd');rDx()"><span>End Stage Renal Disease (ESRD)</span></label>
+      <label class="ci" id="lbl-r-bph"><input type="checkbox" id="r-bph" value="Benign Prostatic Hyperplasia (BPH)" onchange="uc(this,'lbl-r-bph')"><span>Benign Prostatic Hyperplasia (BPH)</span></label>
+      <label class="ci" id="lbl-r-stones"><input type="checkbox" id="r-stones" value="Kidney Stones (Nephrolithiasis)" onchange="uc(this,'lbl-r-stones')"><span>Kidney Stones (Nephrolithiasis)</span></label>
+      <label class="ci" id="lbl-r-pkd"><input type="checkbox" id="r-pkd" value="Polycystic Kidney Disease (PKD)" onchange="uc(this,'lbl-r-pkd')"><span>Polycystic Kidney Disease (PKD)</span></label>
+      <label class="ci" id="lbl-r-gn"><input type="checkbox" id="r-gn" value="Glomerulonephritis" onchange="uc(this,'lbl-r-gn')"><span>Glomerulonephritis</span></label>
+      <label class="ci" id="lbl-r-ns"><input type="checkbox" id="r-ns" value="Nephrotic Syndrome" onchange="uc(this,'lbl-r-ns')"><span>Nephrotic Syndrome</span></label>
+      <label class="ci" id="lbl-r-ruti"><input type="checkbox" id="r-ruti" value="Recurrent UTIs" onchange="uc(this,'lbl-r-ruti')"><span>Recurrent UTIs</span></label>
+      <label class="ci" id="lbl-r-prostate"><input type="checkbox" id="r-prostate" value="History of Prostate Cancer with Prostatectomy" onchange="uc(this,'lbl-r-prostate');rDx()"><span>Hx Prostate Cancer / Prostatectomy</span></label>
+      <label class="ci" id="lbl-r-ras"><input type="checkbox" id="r-ras" value="Renal Artery Stenosis" onchange="uc(this,'lbl-r-ras')"><span>Renal Artery Stenosis</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('r','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('r','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="r-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="r-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="r-provname" placeholder="e.g. Slamat Ali MD"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="r-practice" placeholder="e.g. Kern Nephrology"></div>
+      </div>
+    </div>
+    <div id="r-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Nephrologist / Urologist Referral Status</label>
+          <select id="r-referral"><option value="none">Not discussed</option><option value="neph-accepted">Nephrologist — Accepted</option><option value="neph-declined">Nephrologist — Declined</option><option value="uro-accepted">Urologist — Accepted</option><option value="uro-declined">Urologist — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Renal / urogenital hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('r-hosp','no',this);showEl('r-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('r-hosp','yes',this);showEl('r-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="r-hosp" value="no">
+    <div class="sf" id="r-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="r-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="r-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="r-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="r-hosp-reason" placeholder="e.g. renal insufficiency, dysuria"></div></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="r-egfr-sec">
+    <div class="section-title"><span class="tt">eGFR Lab Values</span><span class="sbadge">CKD / ESRD</span></div>
+    <div class="fr c3">
+      <div><label class="fl">Most Recent eGFR</label><input type="text" id="r-egfr" placeholder="e.g. 32.0"></div>
+      <div><label class="fl">eGFR Date — Month</label><select id="r-egfr-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select></div>
+      <div><label class="fl">eGFR Date — Year</label><input type="number" id="r-egfr-yr" min="2020" max="2030" placeholder="Year"></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="r-dialysis-sec">
+    <div class="section-title"><span class="tt">Dialysis</span><span class="sbadge">ESRD</span></div>
+    <div class="fr c1">
+      <div><label class="fl">On Dialysis</label>
+        <div class="tw" style="max-width:200px"><button class="tb active" onclick="setToggle('r-dialysis','yes',this);showEl('r-dial-sub',true)">Yes</button><button class="tb" onclick="setToggle('r-dialysis','no',this);showEl('r-dial-sub',false)">No</button></div>
+        <input type="hidden" id="r-dialysis" value="yes">
+      </div>
+    </div>
+    <div class="sf" id="r-dial-sub" style="display:block">
+      <div class="fr c3">
+        <div><label class="fl">Type</label><select id="r-dial-type"><option value="hemodialysis">Hemodialysis</option><option value="peritoneal dialysis">Peritoneal Dialysis</option></select></div>
+        <div><label class="fl">Frequency</label><input type="text" id="r-dial-freq" placeholder="e.g. 3x/week Mon/Wed/Fri"></div>
+        <div><label class="fl">Facility</label><input type="text" id="r-dial-fac" placeholder="e.g. Davita Dialysis"></div>
+      </div>
+      <div class="fr c2 mt10">
+        <div><label class="fl">Access Type</label><select id="r-dial-access"><option value="tunneled catheter">Tunneled Catheter</option><option value="arteriovenous fistula (AVF)">AVF</option><option value="arteriovenous graft (AVG)">AVG</option></select></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="r-incont-sec">
+    <div class="section-title"><span class="tt">Incontinence / Catheter</span><span class="sbadge">Prostatectomy</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Bladder Incontinence</label>
+        <div class="tw"><button class="tb" onclick="setToggle('r-incont','yes',this)">Yes</button><button class="tb active" onclick="setToggle('r-incont','no',this)">No</button></div>
+        <input type="hidden" id="r-incont" value="no">
+      </div>
+      <div><label class="fl">Has Foley Catheter</label>
+        <div class="tw"><button class="tb" onclick="setToggle('r-foley','yes',this)">Yes</button><button class="tb active" onclick="setToggle('r-foley','no',this)">No</button></div>
+        <input type="hidden" id="r-foley" value="no">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Renal / Urogenital Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('r-sx','yes',this);showEl('r-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('r-sx','no',this);showEl('r-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="r-sx" value="yes">
+        <div class="sf" id="r-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="r-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Renal / Urogenital Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-rm-tam"><input type="checkbox" id="rm-tam" value="tamsulosin" onchange="uc(this,'lbl-rm-tam')"><span>Tamsulosin</span></label>
+      <label class="ci" id="lbl-rm-fin"><input type="checkbox" id="rm-fin" value="finasteride" onchange="uc(this,'lbl-rm-fin')"><span>Finasteride</span></label>
+      <label class="ci" id="lbl-rm-oxy"><input type="checkbox" id="rm-oxy" value="oxybutynin chloride" onchange="uc(this,'lbl-rm-oxy')"><span>Oxybutynin Chloride</span></label>
+      <label class="ci" id="lbl-rm-ker"><input type="checkbox" id="rm-ker" value="finerenone (Kerendia)" onchange="uc(this,'lbl-rm-ker')"><span>Kerendia (Finerenone)</span></label>
+      <label class="ci" id="lbl-rm-jar"><input type="checkbox" id="rm-jar" value="empagliflozin (Jardiance)" onchange="uc(this,'lbl-rm-jar')"><span>Jardiance (Empagliflozin)</span></label>
+      <label class="ci" id="lbl-rm-far"><input type="checkbox" id="rm-far" value="dapagliflozin (Farxiga)" onchange="uc(this,'lbl-rm-far')"><span>Farxiga (Dapagliflozin)</span></label>
+      <label class="ci" id="lbl-rm-sev"><input type="checkbox" id="rm-sev" value="sevelamer (Renvela)" onchange="uc(this,'lbl-rm-sev')"><span>Renvela (Sevelamer)</span></label>
+      <label class="ci" id="lbl-rm-cal"><input type="checkbox" id="rm-cal" value="calcitriol" onchange="uc(this,'lbl-rm-cal')"><span>Calcitriol</span></label>
+      <label class="ci" id="lbl-rm-epo"><input type="checkbox" id="rm-epo" value="epoetin alfa (Epogen)" onchange="uc(this,'lbl-rm-epo')"><span>Epogen (Epoetin Alfa)</span></label>
+      <label class="ci" id="lbl-rm-sod"><input type="checkbox" id="rm-sod" value="sodium bicarbonate" onchange="uc(this,'lbl-rm-sod')"><span>Sodium Bicarbonate</span></label>
+      <label class="ci" id="lbl-rm-sol"><input type="checkbox" id="rm-sol" value="solifenacin (Vesicare)" onchange="uc(this,'lbl-rm-sol')"><span>Vesicare (Solifenacin)</span></label>
+      <label class="ci" id="lbl-rm-allo"><input type="checkbox" id="rm-allo" value="allopurinol" onchange="uc(this,'lbl-rm-allo')"><span>Allopurinol</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="rm-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('r-adv','yes',this);showEl('r-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('r-adv','no',this);showEl('r-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="r-adv" value="yes">
+        <div class="sf" id="r-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="r-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Additional Referrals</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-r-nutri"><input type="checkbox" id="r-nutri" onchange="uc(this,'lbl-r-nutri')"><span>Nutritionist (Complex Dietary Needs)</span></label>
+      <label class="ci" id="lbl-r-nephref"><input type="checkbox" id="r-nephref" onchange="uc(this,'lbl-r-nephref')"><span>Nephrologist Referral</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Educational Materials</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-r-davita"><input type="checkbox" id="r-davita" onchange="uc(this,'lbl-r-davita')"><span>Davita Kidney Smart Program</span></label>
+      <label class="ci" id="lbl-r-aakp"><input type="checkbox" id="r-aakp" onchange="uc(this,'lbl-r-aakp')"><span>American Association of Kidney Patients (AAKP)</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateRenal()">Generate Assessment</button>
+  <div class="out-sec" id="r-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="r-copy-btn" onclick="copyNote('r-out-txt','r-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="r-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ NEUROLOGICAL ═══════════════ -->
+<div id="tab-neuro" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('n-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('n-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="n-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Neurological Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-n-cva"><input type="checkbox" id="n-cva" value="History of CVA (Stroke)" onchange="uc(this,'lbl-n-cva');nDx()"><span>History of CVA (Stroke)</span></label>
+      <label class="ci" id="lbl-n-tia"><input type="checkbox" id="n-tia" value="History of TIA" onchange="uc(this,'lbl-n-tia')"><span>History of TIA</span></label>
+      <label class="ci" id="lbl-n-epi"><input type="checkbox" id="n-epi" value="Epilepsy / Seizure Disorder" onchange="uc(this,'lbl-n-epi')"><span>Epilepsy / Seizure Disorder</span></label>
+      <label class="ci" id="lbl-n-park"><input type="checkbox" id="n-park" value="Parkinson's Disease" onchange="uc(this,'lbl-n-park')"><span>Parkinson's Disease</span></label>
+      <label class="ci" id="lbl-n-ms"><input type="checkbox" id="n-ms" value="Multiple Sclerosis (MS)" onchange="uc(this,'lbl-n-ms')"><span>Multiple Sclerosis (MS)</span></label>
+      <label class="ci" id="lbl-n-dem"><input type="checkbox" id="n-dem" value="Alzheimer's Disease / Dementia" onchange="uc(this,'lbl-n-dem')"><span>Alzheimer's / Dementia</span></label>
+      <label class="ci" id="lbl-n-cocmen"><input type="checkbox" id="n-cocmen" value="Coccidioidomycosis Meningitis" onchange="uc(this,'lbl-n-cocmen')"><span>Cocci Meningitis</span></label>
+      <label class="ci" id="lbl-n-neuro"><input type="checkbox" id="n-neuro" value="Neuropathy" onchange="uc(this,'lbl-n-neuro')"><span>Neuropathy</span></label>
+      <label class="ci" id="lbl-n-mig"><input type="checkbox" id="n-mig" value="Migraines" onchange="uc(this,'lbl-n-mig')"><span>Migraines</span></label>
+      <label class="ci" id="lbl-n-shunt"><input type="checkbox" id="n-shunt" value="VP Shunt" onchange="uc(this,'lbl-n-shunt')"><span>VP Shunt</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('n','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('n','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="n-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="n-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="n-provname" placeholder="e.g. Mahmoud Rashidi-Naimabadi"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="n-practice" placeholder="e.g. Kern Neurology"></div>
+      </div>
+    </div>
+    <div id="n-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Neurologist Referral Status</label>
+          <select id="n-referral"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Neurological hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('n-hosp','no',this);showEl('n-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('n-hosp','yes',this);showEl('n-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="n-hosp" value="no">
+    <div class="sf" id="n-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="n-hosp-n" min="1" placeholder="e.g. 2"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="n-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="n-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="n-hosp-reason" placeholder="e.g. CVA, seizure, VP Shunt procedure"></div></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="n-cva-sec">
+    <div class="section-title"><span class="tt">CVA / Stroke Details</span><span class="sbadge">CVA</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Residual Deficits</label>
+        <div class="tw"><button class="tb" onclick="setToggle('n-deficits','yes',this);showEl('n-def-sub',true)">Yes</button><button class="tb active" onclick="setToggle('n-deficits','no',this);showEl('n-def-sub',false)">No</button></div>
+        <input type="hidden" id="n-deficits" value="no">
+      </div>
+    </div>
+    <div class="sf" id="n-def-sub"><label class="fl">Describe Deficits</label><input type="text" id="n-def-det" placeholder="e.g. right sided weakness with BLE weakness"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Mobility &amp; ADLs</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Performs ADLs Independently</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('n-adl','yes',this)">Yes</button><button class="tb" onclick="setToggle('n-adl','no',this)">No</button></div>
+        <input type="hidden" id="n-adl" value="yes">
+      </div>
+      <div><label class="fl">Assistive Device for Ambulation</label>
+        <select id="n-assist"><option value="none">None</option><option value="a cane">Cane</option><option value="a front-wheeled walker (FWW)">Front-Wheeled Walker (FWW)</option><option value="a rollator">Rollator</option><option value="a wheelchair">Wheelchair</option><option value="a motorized scooter">Motorized Scooter</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Neurological Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('n-sx','yes',this);showEl('n-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('n-sx','no',this);showEl('n-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="n-sx" value="yes">
+        <div class="sf" id="n-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="n-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Neurological Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-nm-lev"><input type="checkbox" id="nm-lev" value="levetiracetam (Keppra)" onchange="uc(this,'lbl-nm-lev')"><span>Keppra (Levetiracetam)</span></label>
+      <label class="ci" id="lbl-nm-carb"><input type="checkbox" id="nm-carb" value="carbidopa-levodopa (Sinemet)" onchange="uc(this,'lbl-nm-carb')"><span>Sinemet (Carbidopa-Levodopa)</span></label>
+      <label class="ci" id="lbl-nm-gab"><input type="checkbox" id="nm-gab" value="gabapentin" onchange="uc(this,'lbl-nm-gab')"><span>Gabapentin</span></label>
+      <label class="ci" id="lbl-nm-preg"><input type="checkbox" id="nm-preg" value="pregabalin (Lyrica)" onchange="uc(this,'lbl-nm-preg')"><span>Lyrica (Pregabalin)</span></label>
+      <label class="ci" id="lbl-nm-top"><input type="checkbox" id="nm-top" value="topiramate (Topamax)" onchange="uc(this,'lbl-nm-top')"><span>Topamax (Topiramate)</span></label>
+      <label class="ci" id="lbl-nm-cbz"><input type="checkbox" id="nm-cbz" value="carbamazepine (Tegretol)" onchange="uc(this,'lbl-nm-cbz')"><span>Tegretol (Carbamazepine)</span></label>
+      <label class="ci" id="lbl-nm-don"><input type="checkbox" id="nm-don" value="donepezil (Aricept)" onchange="uc(this,'lbl-nm-don')"><span>Aricept (Donepezil)</span></label>
+      <label class="ci" id="lbl-nm-mem"><input type="checkbox" id="nm-mem" value="memantine (Namenda)" onchange="uc(this,'lbl-nm-mem')"><span>Namenda (Memantine)</span></label>
+      <label class="ci" id="lbl-nm-fluc"><input type="checkbox" id="nm-fluc" value="fluconazole" onchange="uc(this,'lbl-nm-fluc')"><span>Fluconazole</span></label>
+      <label class="ci" id="lbl-nm-bac"><input type="checkbox" id="nm-bac" value="baclofen" onchange="uc(this,'lbl-nm-bac')"><span>Baclofen</span></label>
+      <label class="ci" id="lbl-nm-riz"><input type="checkbox" id="nm-riz" value="rizatriptan (Maxalt)" onchange="uc(this,'lbl-nm-riz')"><span>Maxalt (Rizatriptan)</span></label>
+      <label class="ci" id="lbl-nm-suma"><input type="checkbox" id="nm-suma" value="sumatriptan (Imitrex)" onchange="uc(this,'lbl-nm-suma')"><span>Imitrex (Sumatriptan)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="nm-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('n-adv','yes',this);showEl('n-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('n-adv','no',this);showEl('n-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="n-adv" value="yes">
+        <div class="sf" id="n-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="n-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateNeuro()">Generate Assessment</button>
+  <div class="out-sec" id="n-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="n-copy-btn" onclick="copyNote('n-out-txt','n-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="n-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ GASTROINTESTINAL ═══════════════ -->
+<div id="tab-gi" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('gi-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('gi-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="gi-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gastrointestinal Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-gi-gerd"><input type="checkbox" id="gi-gerd" value="GERD" onchange="uc(this,'lbl-gi-gerd')"><span>GERD</span></label>
+      <label class="ci" id="lbl-gi-crohn"><input type="checkbox" id="gi-crohn" value="Crohn's Disease" onchange="uc(this,'lbl-gi-crohn')"><span>Crohn's Disease</span></label>
+      <label class="ci" id="lbl-gi-uc"><input type="checkbox" id="gi-uc" value="Ulcerative Colitis" onchange="uc(this,'lbl-gi-uc')"><span>Ulcerative Colitis</span></label>
+      <label class="ci" id="lbl-gi-divert"><input type="checkbox" id="gi-divert" value="Diverticulitis / Diverticulosis" onchange="uc(this,'lbl-gi-divert')"><span>Diverticulitis / Diverticulosis</span></label>
+      <label class="ci" id="lbl-gi-ibs"><input type="checkbox" id="gi-ibs" value="Irritable Bowel Syndrome (IBS)" onchange="uc(this,'lbl-gi-ibs')"><span>Irritable Bowel Syndrome (IBS)</span></label>
+      <label class="ci" id="lbl-gi-cirr"><input type="checkbox" id="gi-cirr" value="Cirrhosis" onchange="uc(this,'lbl-gi-cirr')"><span>Cirrhosis</span></label>
+      <label class="ci" id="lbl-gi-hep"><input type="checkbox" id="gi-hep" value="Hepatitis" onchange="uc(this,'lbl-gi-hep')"><span>Hepatitis</span></label>
+      <label class="ci" id="lbl-gi-panc"><input type="checkbox" id="gi-panc" value="Pancreatitis" onchange="uc(this,'lbl-gi-panc')"><span>Pancreatitis</span></label>
+      <label class="ci" id="lbl-gi-cel"><input type="checkbox" id="gi-cel" value="Celiac Disease" onchange="uc(this,'lbl-gi-cel')"><span>Celiac Disease</span></label>
+      <label class="ci" id="lbl-gi-gib"><input type="checkbox" id="gi-gib" value="History of GI Bleed" onchange="uc(this,'lbl-gi-gib')"><span>History of GI Bleed</span></label>
+      <label class="ci" id="lbl-gi-pud"><input type="checkbox" id="gi-pud" value="Peptic Ulcer Disease (PUD)" onchange="uc(this,'lbl-gi-pud')"><span>Peptic Ulcer Disease (PUD)</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('gi','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('gi','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="gi-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="gi-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="gi-provname" placeholder="e.g. Paramvir Rahal MD"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="gi-practice" placeholder="e.g. Institute of Advanced Gastroenterology"></div>
+      </div>
+    </div>
+    <div id="gi-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">GI Specialist Referral Status</label>
+          <select id="gi-referral"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">GI-related hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('gi-hosp','no',this);showEl('gi-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('gi-hosp','yes',this);showEl('gi-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="gi-hosp" value="no">
+    <div class="sf" id="gi-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="gi-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="gi-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="gi-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="gi-hosp-reason" placeholder="e.g. acute diverticulitis, GI bleed"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Current GI Status</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Reports Current GI Issues</label>
+        <div class="tw" style="max-width:340px"><button class="tb" onclick="setToggle('gi-issues','yes',this);showEl('gi-issues-sub',true)">Yes — Reports Issues</button><button class="tb active" onclick="setToggle('gi-issues','no',this);showEl('gi-issues-sub',false)">No — Managed / Stable</button></div>
+        <input type="hidden" id="gi-issues" value="no">
+        <div class="sf" id="gi-issues-sub"><label class="fl">Describe Current Issues</label><input type="text" id="gi-issues-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gastrointestinal Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-gim-ome"><input type="checkbox" id="gim-ome" value="omeprazole (Prilosec)" onchange="uc(this,'lbl-gim-ome')"><span>Prilosec (Omeprazole)</span></label>
+      <label class="ci" id="lbl-gim-pan"><input type="checkbox" id="gim-pan" value="pantoprazole (Protonix)" onchange="uc(this,'lbl-gim-pan')"><span>Protonix (Pantoprazole)</span></label>
+      <label class="ci" id="lbl-gim-fam"><input type="checkbox" id="gim-fam" value="famotidine (Pepcid)" onchange="uc(this,'lbl-gim-fam')"><span>Pepcid (Famotidine)</span></label>
+      <label class="ci" id="lbl-gim-dic"><input type="checkbox" id="gim-dic" value="dicyclomine (Bentyl)" onchange="uc(this,'lbl-gim-dic')"><span>Bentyl (Dicyclomine)</span></label>
+      <label class="ci" id="lbl-gim-cre"><input type="checkbox" id="gim-cre" value="pancrelipase (Creon)" onchange="uc(this,'lbl-gim-cre')"><span>Creon (Pancrelipase)</span></label>
+      <label class="ci" id="lbl-gim-dip"><input type="checkbox" id="gim-dip" value="diphenoxylate/atropine (Lomotil)" onchange="uc(this,'lbl-gim-dip')"><span>Lomotil (Diphenoxylate/Atropine)</span></label>
+      <label class="ci" id="lbl-gim-mes"><input type="checkbox" id="gim-mes" value="mesalamine (Asacol)" onchange="uc(this,'lbl-gim-mes')"><span>Asacol (Mesalamine)</span></label>
+      <label class="ci" id="lbl-gim-sul"><input type="checkbox" id="gim-sul" value="sulfasalazine (Azulfidine)" onchange="uc(this,'lbl-gim-sul')"><span>Azulfidine (Sulfasalazine)</span></label>
+      <label class="ci" id="lbl-gim-suc"><input type="checkbox" id="gim-suc" value="sucralfate (Carafate)" onchange="uc(this,'lbl-gim-suc')"><span>Carafate (Sucralfate)</span></label>
+      <label class="ci" id="lbl-gim-reg"><input type="checkbox" id="gim-reg" value="metoclopramide (Reglan)" onchange="uc(this,'lbl-gim-reg')"><span>Reglan (Metoclopramide)</span></label>
+      <label class="ci" id="lbl-gim-mir"><input type="checkbox" id="gim-mir" value="polyethylene glycol (MiraLax)" onchange="uc(this,'lbl-gim-mir')"><span>MiraLax (Polyethylene Glycol)</span></label>
+      <label class="ci" id="lbl-gim-hum"><input type="checkbox" id="gim-hum" value="adalimumab (Humira)" onchange="uc(this,'lbl-gim-hum')"><span>Humira (Adalimumab)</span></label>
+      <label class="ci" id="lbl-gim-urs"><input type="checkbox" id="gim-urs" value="ursodiol (Actigall)" onchange="uc(this,'lbl-gim-urs')"><span>Actigall (Ursodiol)</span></label>
+      <label class="ci" id="lbl-gim-lac"><input type="checkbox" id="gim-lac" value="lactulose" onchange="uc(this,'lbl-gim-lac')"><span>Lactulose</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="gim-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('gi-adv','yes',this);showEl('gi-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('gi-adv','no',this);showEl('gi-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="gi-adv" value="yes">
+        <div class="sf" id="gi-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="gi-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">BMI &amp; Lifestyle</span></div>
+    <div class="fr c2">
+      <div><label class="fl">BMI</label><input type="number" id="gi-bmi" placeholder="e.g. 34.2" step="0.1"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Additional Referrals</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-gi-nutri"><input type="checkbox" id="gi-nutri" onchange="uc(this,'lbl-gi-nutri')"><span>Nutritionist (Complex Dietary Needs)</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateGI()">Generate Assessment</button>
+  <div class="out-sec" id="gi-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="gi-copy-btn" onclick="copyNote('gi-out-txt','gi-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="gi-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ MUSCULOSKELETAL ═══════════════ -->
+<div id="tab-msk" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('msk-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('msk-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="msk-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Musculoskeletal Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-msk-oa"><input type="checkbox" id="msk-oa" value="Osteoarthritis" onchange="uc(this,'lbl-msk-oa')"><span>Osteoarthritis</span></label>
+      <label class="ci" id="lbl-msk-ra"><input type="checkbox" id="msk-ra" value="Rheumatoid Arthritis" onchange="uc(this,'lbl-msk-ra')"><span>Rheumatoid Arthritis</span></label>
+      <label class="ci" id="lbl-msk-djd"><input type="checkbox" id="msk-djd" value="Degenerative Joint Disease (DJD)" onchange="uc(this,'lbl-msk-djd')"><span>Degenerative Joint Disease (DJD)</span></label>
+      <label class="ci" id="lbl-msk-ddd"><input type="checkbox" id="msk-ddd" value="Degenerative Disc Disease (DDD)" onchange="uc(this,'lbl-msk-ddd')"><span>Degenerative Disc Disease (DDD)</span></label>
+      <label class="ci" id="lbl-msk-gout"><input type="checkbox" id="msk-gout" value="Gout" onchange="uc(this,'lbl-msk-gout')"><span>Gout</span></label>
+      <label class="ci" id="lbl-msk-fibro"><input type="checkbox" id="msk-fibro" value="Fibromyalgia" onchange="uc(this,'lbl-msk-fibro')"><span>Fibromyalgia</span></label>
+      <label class="ci" id="lbl-msk-sten"><input type="checkbox" id="msk-sten" value="Spinal Stenosis" onchange="uc(this,'lbl-msk-sten')"><span>Spinal Stenosis</span></label>
+      <label class="ci" id="lbl-msk-hern"><input type="checkbox" id="msk-hern" value="Herniated Disc" onchange="uc(this,'lbl-msk-hern')"><span>Herniated Disc</span></label>
+      <label class="ci" id="lbl-msk-jr"><input type="checkbox" id="msk-jr" value="History of Joint Replacement" onchange="uc(this,'lbl-msk-jr');mskDx()"><span>History of Joint Replacement</span></label>
+      <label class="ci" id="lbl-msk-fx"><input type="checkbox" id="msk-fx" value="History of Fracture" onchange="uc(this,'lbl-msk-fx');mskDx()"><span>History of Fracture</span></label>
+      <label class="ci" id="lbl-msk-osteo"><input type="checkbox" id="msk-osteo" value="Osteoporosis / Osteopenia" onchange="uc(this,'lbl-msk-osteo')"><span>Osteoporosis / Osteopenia</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('msk','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('msk','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="msk-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="msk-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name(s)</label><input type="text" id="msk-provname" placeholder="e.g. Karl Balch MD (Orthopedic Surgeon)"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="msk-practice" placeholder="e.g. Kern Orthopedics"></div>
+      </div>
+    </div>
+    <div id="msk-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Specialist Referral Status</label>
+          <select id="msk-referral"><option value="none">Not discussed</option><option value="ortho-accepted">Orthopedic — Accepted</option><option value="ortho-declined">Orthopedic — Declined</option><option value="pain-accepted">Pain Management — Accepted</option><option value="pain-declined">Pain Management — Declined</option><option value="rheum-accepted">Rheumatology — Accepted</option><option value="rheum-declined">Rheumatology — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Musculoskeletal hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('msk-hosp','no',this);showEl('msk-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('msk-hosp','yes',this);showEl('msk-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="msk-hosp" value="no">
+    <div class="sf" id="msk-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="msk-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="msk-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="msk-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="msk-hosp-reason" placeholder="e.g. joint replacement, fracture"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Pain Assessment</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Primary Pain Location</label><input type="text" id="msk-pain-loc" placeholder="e.g. left knee, lower back"></div>
+      <div><label class="fl">Pain Managed With</label>
+        <select id="msk-pain-mgmt"><option value="medication and rest">Medication &amp; Rest</option><option value="medication only">Medication Only</option><option value="physical therapy">Physical Therapy</option><option value="injections">Injections</option><option value="a combination of therapies">Combination of Therapies</option></select>
+      </div>
+    </div>
+    <div class="fr c1 mt10">
+      <div><label class="fl">Surgical Intervention</label>
+        <div class="tw" style="max-width:480px">
+          <button class="tb active" onclick="setToggle('msk-surg','none',this)">No / Not Discussed</button>
+          <button class="tb"        onclick="setToggle('msk-surg','planned',this)">Planned / In Process</button>
+          <button class="tb"        onclick="setToggle('msk-surg','completed',this)">Completed</button>
+        </div>
+        <input type="hidden" id="msk-surg" value="none">
+      </div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="msk-jr-sec">
+    <div class="section-title"><span class="tt">Joint Replacement Details</span><span class="sbadge">Joint Replacement</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Joint(s) Replaced</label><input type="text" id="msk-jr-joint" placeholder="e.g. right knee, left hip"></div>
+      <div><label class="fl">Timeframe</label><input type="text" id="msk-jr-time" placeholder="e.g. March 2025"></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="msk-fx-sec">
+    <div class="section-title"><span class="tt">Fracture Details</span><span class="sbadge">Fracture</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Fracture Location</label><input type="text" id="msk-fx-loc" placeholder="e.g. left hip, right wrist"></div>
+      <div><label class="fl">Timeframe</label><input type="text" id="msk-fx-time" placeholder="e.g. January 2026"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Mobility &amp; ADLs</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Performs ADLs Independently</label>
+        <div class="tw"><button class="tb active" onclick="setToggle('msk-adl','yes',this)">Yes</button><button class="tb" onclick="setToggle('msk-adl','no',this)">No</button></div>
+        <input type="hidden" id="msk-adl" value="yes">
+      </div>
+      <div><label class="fl">Assistive Device for Ambulation</label>
+        <select id="msk-assist"><option value="none">None</option><option value="a cane">Cane</option><option value="a front-wheeled walker (FWW)">Front-Wheeled Walker (FWW)</option><option value="a rollator">Rollator</option><option value="a wheelchair">Wheelchair</option><option value="a motorized scooter">Motorized Scooter</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Musculoskeletal Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-mskm-norco"><input type="checkbox" id="mskm-norco" value="hydrocodone/acetaminophen (Norco)" onchange="uc(this,'lbl-mskm-norco')"><span>Norco (Hydrocodone/APAP)</span></label>
+      <label class="ci" id="lbl-mskm-tram"><input type="checkbox" id="mskm-tram" value="tramadol" onchange="uc(this,'lbl-mskm-tram')"><span>Tramadol</span></label>
+      <label class="ci" id="lbl-mskm-oxy"><input type="checkbox" id="mskm-oxy" value="oxycodone" onchange="uc(this,'lbl-mskm-oxy')"><span>Oxycodone</span></label>
+      <label class="ci" id="lbl-mskm-mel"><input type="checkbox" id="mskm-mel" value="meloxicam" onchange="uc(this,'lbl-mskm-mel')"><span>Meloxicam</span></label>
+      <label class="ci" id="lbl-mskm-ibu"><input type="checkbox" id="mskm-ibu" value="ibuprofen" onchange="uc(this,'lbl-mskm-ibu')"><span>Ibuprofen</span></label>
+      <label class="ci" id="lbl-mskm-nap"><input type="checkbox" id="mskm-nap" value="naproxen" onchange="uc(this,'lbl-mskm-nap')"><span>Naproxen</span></label>
+      <label class="ci" id="lbl-mskm-cyc"><input type="checkbox" id="mskm-cyc" value="cyclobenzaprine (Flexeril)" onchange="uc(this,'lbl-mskm-cyc')"><span>Flexeril (Cyclobenzaprine)</span></label>
+      <label class="ci" id="lbl-mskm-meth"><input type="checkbox" id="mskm-meth" value="methocarbamol (Robaxin)" onchange="uc(this,'lbl-mskm-meth')"><span>Robaxin (Methocarbamol)</span></label>
+      <label class="ci" id="lbl-mskm-gab"><input type="checkbox" id="mskm-gab" value="gabapentin" onchange="uc(this,'lbl-mskm-gab')"><span>Gabapentin</span></label>
+      <label class="ci" id="lbl-mskm-mtx"><input type="checkbox" id="mskm-mtx" value="methotrexate" onchange="uc(this,'lbl-mskm-mtx')"><span>Methotrexate</span></label>
+      <label class="ci" id="lbl-mskm-hcq"><input type="checkbox" id="mskm-hcq" value="hydroxychloroquine (Plaquenil)" onchange="uc(this,'lbl-mskm-hcq')"><span>Plaquenil (Hydroxychloroquine)</span></label>
+      <label class="ci" id="lbl-mskm-allo"><input type="checkbox" id="mskm-allo" value="allopurinol" onchange="uc(this,'lbl-mskm-allo')"><span>Allopurinol</span></label>
+      <label class="ci" id="lbl-mskm-col"><input type="checkbox" id="mskm-col" value="colchicine" onchange="uc(this,'lbl-mskm-col')"><span>Colchicine</span></label>
+      <label class="ci" id="lbl-mskm-ale"><input type="checkbox" id="mskm-ale" value="alendronate (Fosamax)" onchange="uc(this,'lbl-mskm-ale')"><span>Fosamax (Alendronate)</span></label>
+      <label class="ci" id="lbl-mskm-hum"><input type="checkbox" id="mskm-hum" value="adalimumab (Humira)" onchange="uc(this,'lbl-mskm-hum')"><span>Humira (Adalimumab)</span></label>
+      <label class="ci" id="lbl-mskm-dul"><input type="checkbox" id="mskm-dul" value="duloxetine (Cymbalta)" onchange="uc(this,'lbl-mskm-dul')"><span>Cymbalta (Duloxetine)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="mskm-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('msk-adv','yes',this);showEl('msk-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('msk-adv','no',this);showEl('msk-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="msk-adv" value="yes">
+        <div class="sf" id="msk-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="msk-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">BMI &amp; Lifestyle</span></div>
+    <div class="fr c2">
+      <div><label class="fl">BMI</label><input type="number" id="msk-bmi" placeholder="e.g. 34.2" step="0.1"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">DME &amp; Referrals</span></div>
+    <div class="fr c1">
+      <div><label class="fl">DME Needs</label>
+        <div class="tw" style="max-width:400px">
+          <button class="tb active" onclick="setToggle('msk-dme','denied',this);showEl('msk-dme-sub',false)">Denies Need</button>
+          <button class="tb"        onclick="setToggle('msk-dme','needs',this);showEl('msk-dme-sub',true)">Needs DME</button>
+          <button class="tb"        onclick="setToggle('msk-dme','not discussed',this);showEl('msk-dme-sub',false)">Not Discussed</button>
+        </div>
+        <input type="hidden" id="msk-dme" value="denied">
+        <div class="sf" id="msk-dme-sub"><label class="fl">DME Needed</label><input type="text" id="msk-dme-det" placeholder="e.g. shower chair, grab bars"></div>
+      </div>
+    </div>
+    <div class="cg mt10">
+      <label class="ci" id="lbl-msk-pt"><input type="checkbox" id="msk-pt" onchange="uc(this,'lbl-msk-pt')"><span>Physical Therapy Referral</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateMSK()">Generate Assessment</button>
+  <div class="out-sec" id="msk-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="msk-copy-btn" onclick="copyNote('msk-out-txt','msk-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="msk-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ HEMATOLOGIC ═══════════════ -->
+<div id="tab-heme" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('h-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('h-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="h-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hematologic Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-h-ida"><input type="checkbox" id="h-ida" value="Iron Deficiency Anemia" onchange="uc(this,'lbl-h-ida');hDx()"><span>Iron Deficiency Anemia</span></label>
+      <label class="ci" id="lbl-h-b12"><input type="checkbox" id="h-b12" value="B12 / Folate Deficiency Anemia" onchange="uc(this,'lbl-h-b12');hDx()"><span>B12 / Folate Deficiency Anemia</span></label>
+      <label class="ci" id="lbl-h-acd"><input type="checkbox" id="h-acd" value="Anemia of Chronic Disease" onchange="uc(this,'lbl-h-acd');hDx()"><span>Anemia of Chronic Disease</span></label>
+      <label class="ci" id="lbl-h-scd"><input type="checkbox" id="h-scd" value="Sickle Cell Disease" onchange="uc(this,'lbl-h-scd')"><span>Sickle Cell Disease</span></label>
+      <label class="ci" id="lbl-h-tcp"><input type="checkbox" id="h-tcp" value="Thrombocytopenia" onchange="uc(this,'lbl-h-tcp')"><span>Thrombocytopenia</span></label>
+      <label class="ci" id="lbl-h-dvt"><input type="checkbox" id="h-dvt" value="DVT / PE" onchange="uc(this,'lbl-h-dvt')"><span>DVT / PE</span></label>
+      <label class="ci" id="lbl-h-clot"><input type="checkbox" id="h-clot" value="Clotting Disorder (Thrombophilia)" onchange="uc(this,'lbl-h-clot')"><span>Clotting Disorder (Thrombophilia)</span></label>
+      <label class="ci" id="lbl-h-poly"><input type="checkbox" id="h-poly" value="Polycythemia Vera" onchange="uc(this,'lbl-h-poly')"><span>Polycythemia Vera</span></label>
+      <label class="ci" id="lbl-h-mds"><input type="checkbox" id="h-mds" value="Myelodysplastic Syndrome (MDS)" onchange="uc(this,'lbl-h-mds')"><span>Myelodysplastic Syndrome (MDS)</span></label>
+      <label class="ci" id="lbl-h-hemo"><input type="checkbox" id="h-hemo" value="Hemophilia" onchange="uc(this,'lbl-h-hemo')"><span>Hemophilia</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('h','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('h','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="h-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="h-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="h-provname" placeholder="e.g. John Smith MD"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="h-practice" placeholder="e.g. Kern Hematology"></div>
+      </div>
+    </div>
+    <div id="h-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Hematologist Referral Status</label>
+          <select id="h-referral"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Hematologic hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('h-hosp','no',this);showEl('h-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('h-hosp','yes',this);showEl('h-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="h-hosp" value="no">
+    <div class="sf" id="h-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="h-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="h-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="h-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="h-hosp-reason" placeholder="e.g. sickle cell crisis, DVT"></div></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="h-labs-sec">
+    <div class="section-title"><span class="tt">Lab Values</span><span class="sbadge">Anemia</span></div>
+    <div class="fr c3">
+      <div><label class="fl">Most Recent Hemoglobin</label><input type="text" id="h-hgb" placeholder="e.g. 10.2"></div>
+      <div><label class="fl">Lab Date — Month</label><select id="h-lab-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select></div>
+      <div><label class="fl">Lab Date — Year</label><input type="number" id="h-lab-yr" min="2020" max="2030" placeholder="Year"></div>
+    </div>
+    <div class="fr c1 mt10">
+      <div><label class="fl">History of Transfusions</label>
+        <div class="tw" style="max-width:200px"><button class="tb" onclick="setToggle('h-transfusion','yes',this)">Yes</button><button class="tb active" onclick="setToggle('h-transfusion','no',this)">No</button></div>
+        <input type="hidden" id="h-transfusion" value="no">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Hematologic Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('h-sx','yes',this);showEl('h-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('h-sx','no',this);showEl('h-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="h-sx" value="yes">
+        <div class="sf" id="h-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="h-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hematologic Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-hm-fe"><input type="checkbox" id="hm-fe" value="ferrous sulfate" onchange="uc(this,'lbl-hm-fe')"><span>Ferrous Sulfate</span></label>
+      <label class="ci" id="lbl-hm-b12"><input type="checkbox" id="hm-b12" value="cyanocobalamin (B12)" onchange="uc(this,'lbl-hm-b12')"><span>Cyanocobalamin (B12)</span></label>
+      <label class="ci" id="lbl-hm-fol"><input type="checkbox" id="hm-fol" value="folic acid" onchange="uc(this,'lbl-hm-fol')"><span>Folic Acid</span></label>
+      <label class="ci" id="lbl-hm-hyd"><input type="checkbox" id="hm-hyd" value="hydroxyurea" onchange="uc(this,'lbl-hm-hyd')"><span>Hydroxyurea</span></label>
+      <label class="ci" id="lbl-hm-epo"><input type="checkbox" id="hm-epo" value="epoetin alfa (Epogen)" onchange="uc(this,'lbl-hm-epo')"><span>Epogen (Epoetin Alfa)</span></label>
+      <label class="ci" id="lbl-hm-war"><input type="checkbox" id="hm-war" value="warfarin" onchange="uc(this,'lbl-hm-war')"><span>Warfarin</span></label>
+      <label class="ci" id="lbl-hm-eli"><input type="checkbox" id="hm-eli" value="apixaban (Eliquis)" onchange="uc(this,'lbl-hm-eli')"><span>Eliquis (Apixaban)</span></label>
+      <label class="ci" id="lbl-hm-xar"><input type="checkbox" id="hm-xar" value="rivaroxaban (Xarelto)" onchange="uc(this,'lbl-hm-xar')"><span>Xarelto (Rivaroxaban)</span></label>
+      <label class="ci" id="lbl-hm-enox"><input type="checkbox" id="hm-enox" value="enoxaparin (Lovenox)" onchange="uc(this,'lbl-hm-enox')"><span>Lovenox (Enoxaparin)</span></label>
+      <label class="ci" id="lbl-hm-clo"><input type="checkbox" id="hm-clo" value="clopidogrel (Plavix)" onchange="uc(this,'lbl-hm-clo')"><span>Plavix (Clopidogrel)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="hm-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('h-adv','yes',this);showEl('h-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('h-adv','no',this);showEl('h-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="h-adv" value="yes">
+        <div class="sf" id="h-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="h-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateHeme()">Generate Assessment</button>
+  <div class="out-sec" id="h-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="h-copy-btn" onclick="copyNote('h-out-txt','h-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="h-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ INTEGUMENTARY ═══════════════ -->
+<div id="tab-integ" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('i-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('i-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="i-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Integumentary Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-i-bcc"><input type="checkbox" id="i-bcc" value="Basal Cell Carcinoma" onchange="uc(this,'lbl-i-bcc');iDx()"><span>Basal Cell Carcinoma</span></label>
+      <label class="ci" id="lbl-i-scc"><input type="checkbox" id="i-scc" value="Squamous Cell Carcinoma" onchange="uc(this,'lbl-i-scc');iDx()"><span>Squamous Cell Carcinoma</span></label>
+      <label class="ci" id="lbl-i-mel"><input type="checkbox" id="i-mel" value="Melanoma" onchange="uc(this,'lbl-i-mel');iDx()"><span>Melanoma</span></label>
+      <label class="ci" id="lbl-i-psor"><input type="checkbox" id="i-psor" value="Psoriasis" onchange="uc(this,'lbl-i-psor')"><span>Psoriasis</span></label>
+      <label class="ci" id="lbl-i-ecz"><input type="checkbox" id="i-ecz" value="Eczema / Atopic Dermatitis" onchange="uc(this,'lbl-i-ecz')"><span>Eczema / Atopic Dermatitis</span></label>
+      <label class="ci" id="lbl-i-rosa"><input type="checkbox" id="i-rosa" value="Rosacea" onchange="uc(this,'lbl-i-rosa')"><span>Rosacea</span></label>
+      <label class="ci" id="lbl-i-actinic"><input type="checkbox" id="i-actinic" value="Actinic Keratosis" onchange="uc(this,'lbl-i-actinic')"><span>Actinic Keratosis</span></label>
+      <label class="ci" id="lbl-i-shingles"><input type="checkbox" id="i-shingles" value="Shingles (Herpes Zoster)" onchange="uc(this,'lbl-i-shingles')"><span>Shingles (Herpes Zoster)</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('i','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('i','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="i-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="i-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="i-provname" placeholder="e.g. Ana Cardenas MD"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="i-practice" placeholder="e.g. Valley Dermatology"></div>
+      </div>
+    </div>
+    <div id="i-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Dermatologist Referral Status</label>
+          <select id="i-referral"><option value="none">Not discussed</option><option value="accepted">Offered — Accepted</option><option value="declined">Offered — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Integumentary hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('i-hosp','no',this);showEl('i-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('i-hosp','yes',this);showEl('i-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="i-hosp" value="no">
+    <div class="sf" id="i-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="i-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="i-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="i-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="i-hosp-reason" placeholder="e.g. MOHS surgery, skin biopsy"></div></div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="i-surg-sec">
+    <div class="section-title"><span class="tt">Surgical History</span><span class="sbadge">Skin Cancer</span></div>
+    <div class="fr c1">
+      <div><label class="fl">History of Skin Cancer Surgery</label>
+        <div class="tw" style="max-width:200px"><button class="tb" onclick="setToggle('i-surghx','yes',this);showEl('i-surg-sub',true)">Yes</button><button class="tb active" onclick="setToggle('i-surghx','no',this);showEl('i-surg-sub',false)">No</button></div>
+        <input type="hidden" id="i-surghx" value="no">
+      </div>
+    </div>
+    <div class="sf" id="i-surg-sub">
+      <div class="fr c3">
+        <div><label class="fl">Procedure Type</label><select id="i-surg-type"><option value="MOHS surgery">MOHS Surgery</option><option value="excision">Excision</option><option value="cryotherapy">Cryotherapy</option><option value="other surgery">Other</option></select></div>
+        <div><label class="fl">Location on Body</label><input type="text" id="i-surg-loc" placeholder="e.g. right nasal wall"></div>
+        <div><label class="fl">Procedure Date</label><input type="text" id="i-surg-date" placeholder="e.g. 01/2026"></div>
+      </div>
+      <div class="fr c1 mt10">
+        <div><label class="fl">Follow Up Scheduled</label>
+          <div class="tw" style="max-width:320px"><button class="tb active" onclick="setToggle('i-fu','yes',this);showEl('i-fu-sub',true)">Yes</button><button class="tb" onclick="setToggle('i-fu','no',this);showEl('i-fu-sub',false)">No</button></div>
+          <input type="hidden" id="i-fu" value="yes">
+        </div>
+      </div>
+      <div class="sf" id="i-fu-sub" style="display:block"><label class="fl">Follow Up Date</label><input type="text" id="i-fu-date" placeholder="e.g. 02/2026" style="max-width:200px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Integumentary Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('i-sx','yes',this);showEl('i-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('i-sx','no',this);showEl('i-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="i-sx" value="yes">
+        <div class="sf" id="i-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="i-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Integumentary Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-im-imi"><input type="checkbox" id="im-imi" value="imiquimod (Aldara)" onchange="uc(this,'lbl-im-imi')"><span>Aldara (Imiquimod)</span></label>
+      <label class="ci" id="lbl-im-flu"><input type="checkbox" id="im-flu" value="fluorouracil (Efudex)" onchange="uc(this,'lbl-im-flu')"><span>Efudex (Fluorouracil)</span></label>
+      <label class="ci" id="lbl-im-tac"><input type="checkbox" id="im-tac" value="tacrolimus (Protopic)" onchange="uc(this,'lbl-im-tac')"><span>Protopic (Tacrolimus)</span></label>
+      <label class="ci" id="lbl-im-clo"><input type="checkbox" id="im-clo" value="clobetasol (Temovate)" onchange="uc(this,'lbl-im-clo')"><span>Temovate (Clobetasol)</span></label>
+      <label class="ci" id="lbl-im-tri"><input type="checkbox" id="im-tri" value="triamcinolone (topical)" onchange="uc(this,'lbl-im-tri')"><span>Triamcinolone (Topical)</span></label>
+      <label class="ci" id="lbl-im-mtx"><input type="checkbox" id="im-mtx" value="methotrexate" onchange="uc(this,'lbl-im-mtx')"><span>Methotrexate</span></label>
+      <label class="ci" id="lbl-im-hum"><input type="checkbox" id="im-hum" value="adalimumab (Humira)" onchange="uc(this,'lbl-im-hum')"><span>Humira (Adalimumab)</span></label>
+      <label class="ci" id="lbl-im-dup"><input type="checkbox" id="im-dup" value="dupilumab (Dupixent)" onchange="uc(this,'lbl-im-dup')"><span>Dupixent (Dupilumab)</span></label>
+      <label class="ci" id="lbl-im-val"><input type="checkbox" id="im-val" value="valacyclovir (Valtrex)" onchange="uc(this,'lbl-im-val')"><span>Valtrex (Valacyclovir)</span></label>
+      <label class="ci" id="lbl-im-acyc"><input type="checkbox" id="im-acyc" value="acyclovir" onchange="uc(this,'lbl-im-acyc')"><span>Acyclovir</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="im-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('i-adv','yes',this);showEl('i-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('i-adv','no',this);showEl('i-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="i-adv" value="yes">
+        <div class="sf" id="i-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="i-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateInteg()">Generate Assessment</button>
+  <div class="out-sec" id="i-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="i-copy-btn" onclick="copyNote('i-out-txt','i-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="i-out-txt"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ BEHAVIORAL HEALTH ═══════════════ -->
+<div id="tab-bh" class="tab-panel">
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Gender</span></div>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('bh-gender','male',this)">Male</button>
+      <button class="tb"        onclick="setToggle('bh-gender','female',this)">Female</button>
+    </div>
+    <input type="hidden" id="bh-gender" value="male">
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Behavioral Health Diagnoses</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-bh-mdd"><input type="checkbox" id="bh-mdd" value="Major Depressive Disorder (MDD)" onchange="uc(this,'lbl-bh-mdd')"><span>Major Depressive Disorder (MDD)</span></label>
+      <label class="ci" id="lbl-bh-gad"><input type="checkbox" id="bh-gad" value="Generalized Anxiety Disorder (GAD)" onchange="uc(this,'lbl-bh-gad')"><span>Generalized Anxiety Disorder (GAD)</span></label>
+      <label class="ci" id="lbl-bh-bpd"><input type="checkbox" id="bh-bpd" value="Bipolar Disorder" onchange="uc(this,'lbl-bh-bpd')"><span>Bipolar Disorder</span></label>
+      <label class="ci" id="lbl-bh-scz"><input type="checkbox" id="bh-scz" value="Schizophrenia / Schizoaffective Disorder" onchange="uc(this,'lbl-bh-scz')"><span>Schizophrenia / Schizoaffective</span></label>
+      <label class="ci" id="lbl-bh-ptsd"><input type="checkbox" id="bh-ptsd" value="PTSD" onchange="uc(this,'lbl-bh-ptsd')"><span>PTSD</span></label>
+      <label class="ci" id="lbl-bh-sud"><input type="checkbox" id="bh-sud" value="Substance Use Disorder" onchange="uc(this,'lbl-bh-sud');bhDx()"><span>Substance Use Disorder</span></label>
+      <label class="ci" id="lbl-bh-ocd"><input type="checkbox" id="bh-ocd" value="OCD" onchange="uc(this,'lbl-bh-ocd')"><span>OCD</span></label>
+      <label class="ci" id="lbl-bh-adhd"><input type="checkbox" id="bh-adhd" value="ADHD" onchange="uc(this,'lbl-bh-adhd')"><span>ADHD</span></label>
+      <label class="ci" id="lbl-bh-panic"><input type="checkbox" id="bh-panic" value="Panic Disorder" onchange="uc(this,'lbl-bh-panic')"><span>Panic Disorder</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Provider Information</span></div>
+    <div class="fr c1">
+      <div>
+        <label class="fl">Management Type</label>
+        <div class="tw" style="max-width:300px">
+          <button class="tb active" onclick="setProvType('bh','specialist',this)">Specialist</button>
+          <button class="tb"        onclick="setProvType('bh','pcp',this)">PCP Managed</button>
+        </div>
+        <input type="hidden" id="bh-provtype" value="specialist">
+      </div>
+    </div>
+    <div id="bh-spec-fields">
+      <div class="fr c2">
+        <div><label class="fl">Provider Name</label><input type="text" id="bh-provname" placeholder="e.g. Jane Smith LCSW"></div>
+        <div><label class="fl">Practice / Clinic</label><input type="text" id="bh-practice" placeholder="e.g. Kern Behavioral Health"></div>
+      </div>
+    </div>
+    <div id="bh-pcp-fields" style="display:none">
+      <div class="fr c1 mt10">
+        <div><label class="fl">Psychiatrist / Therapist Referral Status</label>
+          <select id="bh-referral"><option value="none">Not discussed</option><option value="psych-accepted">Psychiatrist — Accepted</option><option value="psych-declined">Psychiatrist — Declined</option><option value="therapy-accepted">Therapist — Accepted</option><option value="therapy-declined">Therapist — Declined</option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Hospitalization History</span></div>
+    <label class="fl">Behavioral health hospitalizations in the past 12 months</label>
+    <div class="tw" style="max-width:200px">
+      <button class="tb active" onclick="setToggle('bh-hosp','no',this);showEl('bh-hosp-sub',false)">No</button>
+      <button class="tb"        onclick="setToggle('bh-hosp','yes',this);showEl('bh-hosp-sub',true)">Yes</button>
+    </div>
+    <input type="hidden" id="bh-hosp" value="no">
+    <div class="sf" id="bh-hosp-sub">
+      <div class="fr c2">
+        <div><label class="fl">Number of Hospitalizations</label><input type="number" id="bh-hosp-n" min="1" placeholder="e.g. 1"></div>
+        <div><label class="fl">Most Recent — Month &amp; Year</label>
+          <div class="my-wrap">
+            <select id="bh-hosp-mo"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+            <input type="number" id="bh-hosp-yr" min="2020" max="2030" placeholder="Year">
+          </div>
+        </div>
+      </div>
+      <div class="fr c1 mt10"><div><label class="fl">Reason for Hospitalization</label><input type="text" id="bh-hosp-reason" placeholder="e.g. psychiatric crisis, detox"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Therapy / Counseling</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Currently in Therapy / Counseling</label>
+        <div class="tw"><button class="tb" onclick="setToggle('bh-therapy','yes',this)">Yes</button><button class="tb active" onclick="setToggle('bh-therapy','no',this)">No</button></div>
+        <input type="hidden" id="bh-therapy" value="no">
+      </div>
+      <div><label class="fl">Willing to Participate</label>
+        <div class="tw"><button class="tb" onclick="setToggle('bh-willing','yes',this)">Yes</button><button class="tb active" onclick="setToggle('bh-willing','no',this)">No</button><button class="tb" onclick="setToggle('bh-willing','na',this)">N/A</button></div>
+        <input type="hidden" id="bh-willing" value="no">
+      </div>
+    </div>
+  </div>
+
+  <div class="section conditional" id="bh-sud-sec">
+    <div class="section-title"><span class="tt">Substance Use Details</span><span class="sbadge">SUD</span></div>
+    <div class="fr c2">
+      <div><label class="fl">Substance(s)</label><input type="text" id="bh-substance" placeholder="e.g. alcohol, opioids"></div>
+      <div><label class="fl">Recovery Status</label>
+        <select id="bh-recovery"><option value="in recovery">In Recovery</option><option value="actively using">Actively Using</option><option value="in treatment">In Treatment</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Symptoms</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Member Denies Behavioral Health Symptoms</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('bh-sx','yes',this);showEl('bh-sx-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('bh-sx','no',this);showEl('bh-sx-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="bh-sx" value="yes">
+        <div class="sf" id="bh-sx-sub"><label class="fl">Describe Symptoms</label><input type="text" id="bh-sx-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Behavioral Health Medications</span></div>
+    <div class="mg">
+      <label class="ci" id="lbl-bhm-ser"><input type="checkbox" id="bhm-ser" value="sertraline (Zoloft)" onchange="uc(this,'lbl-bhm-ser')"><span>Zoloft (Sertraline)</span></label>
+      <label class="ci" id="lbl-bhm-flu"><input type="checkbox" id="bhm-flu" value="fluoxetine (Prozac)" onchange="uc(this,'lbl-bhm-flu')"><span>Prozac (Fluoxetine)</span></label>
+      <label class="ci" id="lbl-bhm-esc"><input type="checkbox" id="bhm-esc" value="escitalopram (Lexapro)" onchange="uc(this,'lbl-bhm-esc')"><span>Lexapro (Escitalopram)</span></label>
+      <label class="ci" id="lbl-bhm-cit"><input type="checkbox" id="bhm-cit" value="citalopram (Celexa)" onchange="uc(this,'lbl-bhm-cit')"><span>Celexa (Citalopram)</span></label>
+      <label class="ci" id="lbl-bhm-ven"><input type="checkbox" id="bhm-ven" value="venlafaxine (Effexor)" onchange="uc(this,'lbl-bhm-ven')"><span>Effexor (Venlafaxine)</span></label>
+      <label class="ci" id="lbl-bhm-dul"><input type="checkbox" id="bhm-dul" value="duloxetine (Cymbalta)" onchange="uc(this,'lbl-bhm-dul')"><span>Cymbalta (Duloxetine)</span></label>
+      <label class="ci" id="lbl-bhm-bup"><input type="checkbox" id="bhm-bup" value="bupropion (Wellbutrin)" onchange="uc(this,'lbl-bhm-bup')"><span>Wellbutrin (Bupropion)</span></label>
+      <label class="ci" id="lbl-bhm-bus"><input type="checkbox" id="bhm-bus" value="buspirone" onchange="uc(this,'lbl-bhm-bus')"><span>Buspirone</span></label>
+      <label class="ci" id="lbl-bhm-que"><input type="checkbox" id="bhm-que" value="quetiapine (Seroquel)" onchange="uc(this,'lbl-bhm-que')"><span>Seroquel (Quetiapine)</span></label>
+      <label class="ci" id="lbl-bhm-ari"><input type="checkbox" id="bhm-ari" value="aripiprazole (Abilify)" onchange="uc(this,'lbl-bhm-ari')"><span>Abilify (Aripiprazole)</span></label>
+      <label class="ci" id="lbl-bhm-ola"><input type="checkbox" id="bhm-ola" value="olanzapine (Zyprexa)" onchange="uc(this,'lbl-bhm-ola')"><span>Zyprexa (Olanzapine)</span></label>
+      <label class="ci" id="lbl-bhm-ris"><input type="checkbox" id="bhm-ris" value="risperidone (Risperdal)" onchange="uc(this,'lbl-bhm-ris')"><span>Risperdal (Risperidone)</span></label>
+      <label class="ci" id="lbl-bhm-lit"><input type="checkbox" id="bhm-lit" value="lithium" onchange="uc(this,'lbl-bhm-lit')"><span>Lithium</span></label>
+      <label class="ci" id="lbl-bhm-lam"><input type="checkbox" id="bhm-lam" value="lamotrigine (Lamictal)" onchange="uc(this,'lbl-bhm-lam')"><span>Lamictal (Lamotrigine)</span></label>
+      <label class="ci" id="lbl-bhm-val"><input type="checkbox" id="bhm-val" value="valproic acid (Depakote)" onchange="uc(this,'lbl-bhm-val')"><span>Depakote (Valproic Acid)</span></label>
+      <label class="ci" id="lbl-bhm-lor"><input type="checkbox" id="bhm-lor" value="lorazepam (Ativan)" onchange="uc(this,'lbl-bhm-lor')"><span>Ativan (Lorazepam)</span></label>
+      <label class="ci" id="lbl-bhm-tra"><input type="checkbox" id="bhm-tra" value="trazodone" onchange="uc(this,'lbl-bhm-tra')"><span>Trazodone</span></label>
+      <label class="ci" id="lbl-bhm-mir"><input type="checkbox" id="bhm-mir" value="mirtazapine (Remeron)" onchange="uc(this,'lbl-bhm-mir')"><span>Remeron (Mirtazapine)</span></label>
+    </div>
+    <div class="mt10"><label class="fl">Other Medications</label><input type="text" id="bhm-other" placeholder="Comma-separated"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Adverse Effects</span></div>
+    <div class="fr c1">
+      <div><label class="fl">Denies Medication Adverse Effects</label>
+        <div class="tw" style="max-width:340px"><button class="tb active" onclick="setToggle('bh-adv','yes',this);showEl('bh-adv-sub',false)">Yes — Denies</button><button class="tb" onclick="setToggle('bh-adv','no',this);showEl('bh-adv-sub',true)">No — Reports</button></div>
+        <input type="hidden" id="bh-adv" value="yes">
+        <div class="sf" id="bh-adv-sub"><label class="fl">Describe Adverse Effects</label><input type="text" id="bh-adv-det"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="tt">Community Resources</span></div>
+    <div class="cg">
+      <label class="ci" id="lbl-bh-crisis"><input type="checkbox" id="bh-crisis" onchange="uc(this,'lbl-bh-crisis')"><span>988 Suicide &amp; Crisis Lifeline</span></label>
+      <label class="ci" id="lbl-bh-nami"><input type="checkbox" id="bh-nami" onchange="uc(this,'lbl-bh-nami')"><span>NAMI (National Alliance on Mental Illness)</span></label>
+      <label class="ci" id="lbl-bh-aa"><input type="checkbox" id="bh-aa" onchange="uc(this,'lbl-bh-aa')"><span>AA / NA Support Groups</span></label>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generateBH()">Generate Assessment</button>
+  <div class="out-sec" id="bh-out-sec">
+    <div class="out-hdr"><span class="out-title">Generated Assessment</span><button class="copy-btn" id="bh-copy-btn" onclick="copyNote('bh-out-txt','bh-copy-btn')">Copy</button></div>
+    <div class="out-txt" id="bh-out-txt"></div>
+  </div>
+</div>
+
+
+</main>
+<script src="data.js"></script>
+</body>
+</html>
